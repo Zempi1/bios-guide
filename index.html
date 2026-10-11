@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Zempi • BIOS Companion</title>
+  <style>
+    :root {
+      --bg: #0E1015;
+      --card-bg: #14171F;
+      --border: #1C1F26;
+      --accent: #3B82F6;
+      --green: #10B981;
+      --orange: #F59E0B;
+      --red: #EF4444;
+      --text: #F3F4F6;
+      --text-muted: #9CA3AF;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0; padding: 16px; line-height: 1.5;
+    }
+    .header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px; margin-bottom: 16px;
+    }
+    .brand { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 1.2px; text-transform: uppercase; }
+    .title { font-size: 20px; font-weight: 700; margin: 4px 0 8px 0; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill {
+      background: #1A1F2B; border: 1px solid var(--border); border-radius: 6px;
+      padding: 4px 10px; font-size: 12px; font-weight: 600; color: var(--text);
+    }
+    .hotkey-banner {
+      background: #11141C; border: 1px solid var(--border); border-radius: 8px;
+      padding: 12px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .hotkey-title { font-size: 13px; color: var(--text-muted); }
+    .keys { display: flex; gap: 6px; }
+    .key-badge {
+      background: #202634; border: 1px solid #333C4F; border-radius: 6px;
+      padding: 4px 8px; font-size: 12px; font-weight: 700; color: #fff;
+    }
+    .card {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
+      padding: 14px; margin-bottom: 12px;
+    }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .card-title { font-size: 14px; font-weight: 600; }
+    .badge {
+      font-size: 11px; padding: 2px 7px; border-radius: 4px; font-weight: 600;
+    }
+    .badge-green { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-orange { background: rgba(245, 158, 11, 0.15); color: var(--orange); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-red { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.3); }
+    .path-box {
+      background: #090B0E; border: 1px dashed #2A313E; border-radius: 6px;
+      padding: 10px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 13px; color: #E5E7EB; margin-bottom: 8px; word-break: break-word;
+    }
+    .path-box span { color: var(--accent); font-weight: 700; }
+    .desc { font-size: 12px; color: var(--text-muted); margin: 0; }
+    .backup-box {
+      background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 8px; padding: 12px; margin-bottom: 16px;
+    }
+    .backup-title { font-size: 13px; font-weight: 700; color: #FCA5A5; margin-bottom: 6px; }
+    .backup-list { margin: 0; padding-left: 18px; font-size: 12px; color: #D1D5DB; }
+    .backup-list li { margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">Zempi Optimization • Companion</div>
+  <div class="title">Настройка BIOS / UEFI</div>
+  <div class="badge-row" id="specs">
+    <span class="pill" id="pill-vendor">Плата: Загрузка...</span>
+    <span class="pill" id="pill-cpu">CPU: Загрузка...</span>
+    <span class="pill" id="pill-ram">ОЗУ: Загрузка...</span>
+  </div>
+</div>
+
+<div class="hotkey-banner">
+  <span class="hotkey-title">Клавиши входа в BIOS при старте ПК:</span>
+  <div class="keys">
+    <span class="key-badge">DEL</span>
+    <span class="key-badge">F2</span>
+  </div>
+</div>
+
+<div class="backup-box">
+  <div class="backup-title">🛡️ План «Б» (Экстренный сброс и сохранение)</div>
+  <ul class="backup-list">
+    <li><strong>Перед изменениями:</strong> сохраните текущий профиль (Save & Exit ➔ Save Profiles).</li>
+    <li><strong>Быстрый сброс:</strong> клавиша <strong>F9</strong> (Load Optimized Defaults) ➔ F10 (Сохранить).</li>
+    <li><strong>Если нет изображения:</strong> обесточьте ПК и замкните контакты Clear CMOS (CLRTC) на 10 сек.</li>
+  </ul>
+</div>
+
+<div id="guides-container"></div>
+
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const vendor = (urlParams.get('v') || 'gigabyte').toLowerCase();
+  const cpu = (urlParams.get('c') || 'intel').toLowerCase();
+  const ram = (urlParams.get('r') || 'ddr4').toUpperCase();
+  const channels = (urlParams.get('ch') || 'dual').toLowerCase();
+
+  document.getElementById('pill-vendor').textContent = 'Плата: ' + vendor.toUpperCase();
+  document.getElementById('pill-cpu').textContent = 'Платформа: ' + cpu.toUpperCase();
+  document.getElementById('pill-ram').textContent = 'ОЗУ: ' + ram + ' (' + (channels === 'single' ? 'Одноканал ⚠️' : 'Dual Channel') + ')';
+
+  const container = document.getElementById('guides-container');
+
+  // Формирование матрицы путей
+  let tpmPath = "Settings → Miscellaneous → AMD CPU fTPM: [Enabled]";
+  let tpmDesc = "Критически необходимо для работы античитов FACEIT и Riot Vanguard.";
+  let ramPath = "Tweaker → Extreme Memory Profile (X.M.P.): [Profile 1]";
+  let ramDesc = "Активирует паспортную скорость ОЗУ.";
+  let rebarPath = "Settings → IO Ports → Above 4G Decoding: [Enabled] → Re-Size BAR: [Auto]";
+  let cstatesPath = "Tweaker → Advanced CPU Settings → C-States Control: [Disabled]";
+
+  if (vendor.includes('gigabyte')) {
+    if (cpu === 'intel') {
+      tpmPath = "Settings → Miscellaneous → Intel PTT: [Enabled]";
+      ramPath = ram === 'DDR4' ? "Tweaker → Extreme Memory Profile: [Profile 1] → Gear Mode: [Gear 1]" : "Tweaker → Extreme Memory Profile: [Profile 1]";
+      ramDesc += ram === 'DDR4' ? " Обязательно включите Gear 1 для минимального инпут-лага." : " Для DDR5 первый старт после XMP может длиться до 2 минут (тренировка памяти).";
+    }
+  } else if (vendor.includes('asus')) {
+    tpmPath = cpu === 'intel' ? "Advanced → PCH-FW Configuration → PTT: [Enable]" : "Advanced → AMD fTPM configuration → [Firmware TPM: Enable]";
+    ramPath = "Ai Tweaker → Ai Overclock Tuner: [" + (cpu === 'amd' ? "EXPO I" : "XMP I") + "]";
+    rebarPath = "Advanced → PCI Subsystem Settings → Above 4G: [Enabled] → Re-Size BAR: [Auto]";
+    cstatesPath = "Ai Tweaker → CPU Power Management → CPU C-states: [Disabled]";
+  } else if (vendor.includes('msi')) {
+    tpmPath = cpu === 'intel' ? "Security → Trusted Computing → Security Device Support: [Enable]" : "Security → Trusted Computing → AMD fTPM switch: [AMD CPU fTPM]";
+    ramPath = "OC Menu → DRAM Setting → " + (cpu === 'amd' ? "EXPO: [Profile 1]" : "A-XMP: [Profile 1]");
+    rebarPath = "Settings → Advanced → PCIe Subsystem Settings → Above 4G: [Enabled] → Re-Size BAR: [Auto]";
+    cstatesPath = "OC Menu → Advanced CPU Configuration → Intel C-State: [Disabled]";
+  }
+
+  const items = [
+    { title: "1. Модуль безопасности (TPM 2.0)", badge: "Обязательно для FACEIT/Valorant", badgeClass: "badge-green", path: tpmPath, desc: tpmDesc },
+    { title: "2. Безопасная загрузка (Secure Boot)", badge: "Требуется античитами", badgeClass: "badge-green", path: "Boot → Secure Boot → Mode: [Standard] / OS Type: [Windows UEFI Mode] (CSM: Disabled)", desc: "Если пишет ошибку: нажмите Restore Factory Keys." },
+    { title: "3. Профиль памяти (XMP / EXPO)", badge: "FPS & Latency", badgeClass: "badge-orange", path: ramPath, desc: ramDesc },
+    { title: "4. Resizable BAR (Прямой доступ GPU)", badge: "Плавность фреймтайма", badgeClass: "badge-green", path: rebarPath, desc: "Включается строго вместе с Above 4G Decoding при отключенном CSM." },
+    { title: "5. Задержки ввода (C-States)", badge: "Внимание: температура", badgeClass: "badge-red", path: cstatesPath, desc: "Устраняет задержку отклика мыши, но повышает нагрев CPU в простое на 5–10°C." }
+  ];
+
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-header">
+        <span class="card-title">${item.title}</span>
+        <span class="badge ${item.badgeClass}">${item.badge}</span>
+      </div>
+      <div class="path-box">${item.path}</div>
+      <p class="desc">${item.desc}</p>
+    `;
+    container.appendChild(card);
+  });
+</script>
+</body>
+</html>
