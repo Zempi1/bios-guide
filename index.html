@@ -8,161 +8,468 @@
     :root {
       --bg: #0E1015;
       --card-bg: #14171F;
+      --card-inner: #0B0D12;
       --border: #1C1F26;
+      --border-focus: #2D3340;
       --accent: #3B82F6;
       --green: #10B981;
       --orange: #F59E0B;
       --red: #EF4444;
       --text: #F3F4F6;
-      --text-muted: #9CA3AF;
+      --text-muted: #8B949E;
+      --disabled-bg: rgba(255, 255, 255, 0.02);
+      --disabled-text: #4B5563;
     }
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
     body {
       background-color: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      margin: 0; padding: 16px; line-height: 1.5;
+      padding: 16px 12px 36px;
+      display: flex;
+      justify-content: center;
     }
+    .wrapper { width: 100%; max-width: 500px; }
     .header {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 14px; margin-bottom: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
     }
-    .brand { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 1.2px; text-transform: uppercase; }
-    .title { font-size: 20px; font-weight: 700; margin: 4px 0 8px 0; }
-    .badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .brand-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .brand { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: var(--accent); text-transform: uppercase; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: inline-block; margin-right: 4px; }
+    .status-text { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; }
+    .title { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 6px; }
     .pill {
-      background: #1A1F2B; border: 1px solid var(--border); border-radius: 6px;
-      padding: 4px 10px; font-size: 12px; font-weight: 600; color: var(--text);
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #D1D5DB;
     }
-    .hotkey-banner {
-      background: #11141C; border: 1px solid var(--border); border-radius: 8px;
-      padding: 12px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;
+    .pill b { color: #fff; }
+    .hotkey-bar {
+      background: #12151D;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .hotkey-title { font-size: 13px; color: var(--text-muted); }
-    .keys { display: flex; gap: 6px; }
-    .key-badge {
-      background: #202634; border: 1px solid #333C4F; border-radius: 6px;
-      padding: 4px 8px; font-size: 12px; font-weight: 700; color: #fff;
+    .hotkey-label { font-size: 12px; color: var(--text-muted); }
+    .hotkey-tags { display: flex; gap: 6px; }
+    .hotkey-tag {
+      background: #1C2230;
+      border: 1px solid #2B3448;
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
     }
-    .card {
-      background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
-      padding: 14px; margin-bottom: 12px;
+    .tab-switch {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      background: #11141B;
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
     }
-    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .card-title { font-size: 14px; font-weight: 600; }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 8px;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    .tab-btn.active {
+      background: var(--card-bg);
+      color: #fff;
+      border: 1px solid var(--border-focus);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .accordion {
+      background: rgba(239, 68, 68, 0.05);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 8px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .accordion-header {
+      padding: 12px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #FCA5A5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .accordion-body {
+      padding: 0 14px 12px;
+      font-size: 12px;
+      color: #D1D5DB;
+      line-height: 1.6;
+      border-top: 1px dashed rgba(239, 68, 68, 0.2);
+      padding-top: 10px;
+    }
+    .accordion-body ol { padding-left: 18px; }
+    .accordion-body li { margin-bottom: 4px; }
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 10px;
+      transition: all 0.2s;
+    }
+    .step-card.disabled {
+      background: var(--disabled-bg);
+      border-color: rgba(255, 255, 255, 0.05);
+      opacity: 0.65;
+    }
+    .step-card.done {
+      opacity: 0.55;
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .step-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .step-left { display: flex; align-items: center; gap: 8px; }
+    .step-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+    .step-title { font-size: 13px; font-weight: 700; color: #fff; }
     .badge {
-      font-size: 11px; padding: 2px 7px; border-radius: 4px; font-weight: 600;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     .badge-green { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.3); }
     .badge-orange { background: rgba(245, 158, 11, 0.15); color: var(--orange); border: 1px solid rgba(245, 158, 11, 0.3); }
     .badge-red { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.3); }
-    .path-box {
-      background: #090B0E; border: 1px dashed #2A313E; border-radius: 6px;
-      padding: 10px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-      font-size: 13px; color: #E5E7EB; margin-bottom: 8px; word-break: break-word;
+    .badge-locked { background: rgba(107, 114, 128, 0.2); color: #9CA3AF; border: 1px solid rgba(107, 114, 128, 0.3); }
+    .path-container {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 11px;
     }
-    .path-box span { color: var(--accent); font-weight: 700; }
-    .desc { font-size: 12px; color: var(--text-muted); margin: 0; }
-    .backup-box {
-      background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25);
-      border-radius: 8px; padding: 12px; margin-bottom: 16px;
+    .crumb {
+      background: #171C26;
+      border: 1px solid #252D3D;
+      border-radius: 4px;
+      padding: 2px 6px;
+      color: #9CA3AF;
     }
-    .backup-title { font-size: 13px; font-weight: 700; color: #FCA5A5; margin-bottom: 6px; }
-    .backup-list { margin: 0; padding-left: 18px; font-size: 12px; color: #D1D5DB; }
-    .backup-list li { margin-bottom: 4px; }
+    .crumb.action {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.35);
+      color: #93C5FD;
+      font-weight: 700;
+    }
+    .arrow { color: #4B5563; font-size: 10px; }
+    .step-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; margin-bottom: 6px; }
+    .warning-box {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 11px;
+      color: #FCD34D;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+      margin-top: 6px;
+    }
+    .danger-box {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 11px;
+      color: #FCA5A5;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+      margin-top: 6px;
+    }
   </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="brand">Zempi Optimization • Companion</div>
-  <div class="title">Настройка BIOS / UEFI</div>
-  <div class="badge-row" id="specs">
-    <span class="pill" id="pill-vendor">Плата: Загрузка...</span>
-    <span class="pill" id="pill-cpu">CPU: Загрузка...</span>
-    <span class="pill" id="pill-ram">ОЗУ: Загрузка...</span>
+<div class="wrapper">
+  <div class="header">
+    <div class="brand-row">
+      <span class="brand">Zempi Optimization</span>
+      <span class="status-text"><span class="status-dot"></span>Синхронизировано</span>
+    </div>
+    <div class="title">Конфигуратор BIOS</div>
+    <div class="pills">
+      <span class="pill" id="pill-vendor">Плата: <b>Загрузка...</b></span>
+      <span class="pill" id="pill-cpu">ЦПУ: <b>Загрузка...</b></span>
+      <span class="pill" id="pill-ram">ОЗУ: <b>Загрузка...</b></span>
+      <span class="pill" id="pill-disk">Диск: <b>Загрузка...</b></span>
+    </div>
   </div>
-</div>
 
-<div class="hotkey-banner">
-  <span class="hotkey-title">Клавиши входа в BIOS при старте ПК:</span>
-  <div class="keys">
-    <span class="key-badge">DEL</span>
-    <span class="key-badge">F2</span>
+  <div class="hotkey-bar">
+    <span class="hotkey-label">Клавиши входа в BIOS:</span>
+    <div class="hotkey-tags">
+      <span class="hotkey-tag">DEL</span>
+      <span class="hotkey-tag">F2</span>
+    </div>
   </div>
-</div>
 
-<div class="backup-box">
-  <div class="backup-title">🛡️ План «Б» (Экстренный сброс и сохранение)</div>
-  <ul class="backup-list">
-    <li><strong>Перед изменениями:</strong> сохраните текущий профиль (Save & Exit ➔ Save Profiles).</li>
-    <li><strong>Быстрый сброс:</strong> клавиша <strong>F9</strong> (Load Optimized Defaults) ➔ F10 (Сохранить).</li>
-    <li><strong>Если нет изображения:</strong> обесточьте ПК и замкните контакты Clear CMOS (CLRTC) на 10 сек.</li>
-  </ul>
-</div>
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleBackup()">
+      <span>🛡️ План «Б» (Экстренный сброс настроек)</span>
+      <span id="acc-icon">▼</span>
+    </div>
+    <div class="accordion-body" id="acc-body" style="display: none;">
+      <ol>
+        <li><b>Перед изменениями:</b> найдите раздел Save Profiles и сохраните профиль 1.</li>
+        <li><b>Быстрый сброс:</b> нажмите <b>F9</b> (Load Defaults) и <b>F10</b> (Save & Exit).</li>
+        <li><b>Если нет картинки:</b> обесточьте ПК из розетки и замкните контакты Clear CMOS (CLRTC/JBAT1) на 10 сек.</li>
+      </ol>
+    </div>
+  </div>
 
-<div id="guides-container"></div>
+  <!-- Вкладки разделения профилей -->
+  <div class="tab-switch">
+    <button class="tab-btn active" id="tab-btn-sec" onclick="switchTab('security')">🛡️ Античиты (FACEIT / Riot)</button>
+    <button class="tab-btn" id="tab-btn-perf" onclick="switchTab('perf')">⚡ Производительность & FPS</button>
+  </div>
+
+  <div id="tab-security-content"></div>
+  <div id="tab-perf-content" style="display: none;"></div>
+</div>
 
 <script>
+  function toggleBackup() {
+    const body = document.getElementById('acc-body');
+    const icon = document.getElementById('acc-icon');
+    if (body.style.display === 'none') {
+      body.style.display = 'block';
+      icon.textContent = '▲';
+    } else {
+      body.style.display = 'none';
+      icon.textContent = '▼';
+    }
+  }
+
+  function switchTab(tab) {
+    const secContent = document.getElementById('tab-security-content');
+    const perfContent = document.getElementById('tab-perf-content');
+    const secBtn = document.getElementById('tab-btn-sec');
+    const perfBtn = document.getElementById('tab-btn-perf');
+
+    if (tab === 'security') {
+      secContent.style.display = 'block';
+      perfContent.style.display = 'none';
+      secBtn.classList.add('active');
+      perfBtn.classList.remove('active');
+    } else {
+      secContent.style.display = 'none';
+      perfContent.style.display = 'block';
+      secBtn.classList.remove('active');
+      perfBtn.classList.add('active');
+    }
+  }
+
   const urlParams = new URLSearchParams(window.location.search);
   const vendor = (urlParams.get('v') || 'gigabyte').toLowerCase();
   const cpu = (urlParams.get('c') || 'intel').toLowerCase();
-  const ram = (urlParams.get('r') || 'ddr4').toUpperCase();
+  const ramType = (urlParams.get('r') || 'ddr4').toUpperCase();
+  const ramGb = parseInt(urlParams.get('gb') || '32', 10);
   const channels = (urlParams.get('ch') || 'dual').toLowerCase();
+  const disk = (urlParams.get('disk') || 'gpt').toLowerCase();
+  const isLaptop = (urlParams.get('laptop') || '0') === '1';
 
-  document.getElementById('pill-vendor').textContent = 'Плата: ' + vendor.toUpperCase();
-  document.getElementById('pill-cpu').textContent = 'Платформа: ' + cpu.toUpperCase();
-  document.getElementById('pill-ram').textContent = 'ОЗУ: ' + ram + ' (' + (channels === 'single' ? 'Одноканал ⚠️' : 'Dual Channel') + ')';
+  document.getElementById('pill-vendor').innerHTML = 'Плата: <b>' + vendor.toUpperCase() + '</b>';
+  document.getElementById('pill-cpu').innerHTML = 'ЦПУ: <b>' + cpu.toUpperCase() + '</b>';
+  document.getElementById('pill-ram').innerHTML = 'ОЗУ: <b>' + ramGb + ' ГБ ' + ramType + ' (' + (channels === 'single' ? 'Single ⚠️' : 'Dual') + ')</b>';
+  document.getElementById('pill-disk').innerHTML = 'Диск: <b>' + disk.toUpperCase() + (disk === 'mbr' ? ' ❌' : '') + '</b>';
 
-  const container = document.getElementById('guides-container');
-
-  // Формирование матрицы путей
-  let tpmPath = "Settings → Miscellaneous → AMD CPU fTPM: [Enabled]";
-  let tpmDesc = "Критически необходимо для работы античитов FACEIT и Riot Vanguard.";
-  let ramPath = "Tweaker → Extreme Memory Profile (X.M.P.): [Profile 1]";
-  let ramDesc = "Активирует паспортную скорость ОЗУ.";
-  let rebarPath = "Settings → IO Ports → Above 4G Decoding: [Enabled] → Re-Size BAR: [Auto]";
-  let cstatesPath = "Tweaker → Advanced CPU Settings → C-States Control: [Disabled]";
+  // Логика матрицы путей
+  let tpmCrumbs = ["Settings", "Miscellaneous", "AMD CPU fTPM: [Enabled]"];
+  let tpmDesc = "Обязательно для FACEIT Anti-Cheat и Riot Vanguard.";
+  let ramCrumbs = ["Tweaker", "Extreme Memory Profile: [Profile 1]"];
+  let ramDesc = "Активация паспортного разгона оперативной памяти.";
+  let rebarCrumbs = ["Settings", "IO Ports", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
+  let cstatesCrumbs = ["Tweaker", "Advanced CPU Settings", "C-States: [Disabled]"];
+  let spreadCrumbs = ["Tweaker", "Spread Spectrum: [Disabled]"];
 
   if (vendor.includes('gigabyte')) {
     if (cpu === 'intel') {
-      tpmPath = "Settings → Miscellaneous → Intel PTT: [Enabled]";
-      ramPath = ram === 'DDR4' ? "Tweaker → Extreme Memory Profile: [Profile 1] → Gear Mode: [Gear 1]" : "Tweaker → Extreme Memory Profile: [Profile 1]";
-      ramDesc += ram === 'DDR4' ? " Обязательно включите Gear 1 для минимального инпут-лага." : " Для DDR5 первый старт после XMP может длиться до 2 минут (тренировка памяти).";
+      tpmCrumbs = ["Settings", "Miscellaneous", "Intel PTT: [Enabled]"];
+      if (ramType === 'DDR4') {
+        ramCrumbs.push("Gear Mode: [Gear 1]");
+        ramDesc += " Режим Gear 1 обеспечивает минимальный инпут-лаг.";
+      } else {
+        ramDesc += " Для DDR5 первый запуск после включения XMP может длиться до 2 минут (тренировка памяти).";
+      }
     }
   } else if (vendor.includes('asus')) {
-    tpmPath = cpu === 'intel' ? "Advanced → PCH-FW Configuration → PTT: [Enable]" : "Advanced → AMD fTPM configuration → [Firmware TPM: Enable]";
-    ramPath = "Ai Tweaker → Ai Overclock Tuner: [" + (cpu === 'amd' ? "EXPO I" : "XMP I") + "]";
-    rebarPath = "Advanced → PCI Subsystem Settings → Above 4G: [Enabled] → Re-Size BAR: [Auto]";
-    cstatesPath = "Ai Tweaker → CPU Power Management → CPU C-states: [Disabled]";
+    tpmCrumbs = cpu === 'intel' ? ["Advanced", "PCH-FW Config", "PTT: [Enable]"] : ["Advanced", "AMD fTPM", "Firmware TPM: [Enable]"];
+    ramCrumbs = ["Ai Tweaker", "Ai Overclock Tuner", cpu === 'amd' ? "EXPO I / DOCP" : "XMP I"];
+    rebarCrumbs = ["Advanced", "PCI Subsystem", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
+    cstatesCrumbs = ["Ai Tweaker", "CPU Power Mgmt", "C-states: [Disabled]"];
+    spreadCrumbs = ["Ai Tweaker", "BCLK Spread Spectrum: [Disabled]"];
   } else if (vendor.includes('msi')) {
-    tpmPath = cpu === 'intel' ? "Security → Trusted Computing → Security Device Support: [Enable]" : "Security → Trusted Computing → AMD fTPM switch: [AMD CPU fTPM]";
-    ramPath = "OC Menu → DRAM Setting → " + (cpu === 'amd' ? "EXPO: [Profile 1]" : "A-XMP: [Profile 1]");
-    rebarPath = "Settings → Advanced → PCIe Subsystem Settings → Above 4G: [Enabled] → Re-Size BAR: [Auto]";
-    cstatesPath = "OC Menu → Advanced CPU Configuration → Intel C-State: [Disabled]";
+    tpmCrumbs = cpu === 'intel' ? ["Security", "Trusted Computing", "Security Device: [Enable]"] : ["Security", "Trusted Computing", "AMD fTPM: [Enabled]"];
+    ramCrumbs = ["OC Menu", "DRAM Setting", cpu === 'amd' ? "EXPO: [Profile 1]" : "A-XMP: [Profile 1]"];
+    rebarCrumbs = ["Settings", "PCIe Subsystem", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
+    cstatesCrumbs = ["OC Menu", "Advanced CPU Config", "Intel C-State: [Disabled]"];
   }
 
-  const items = [
-    { title: "1. Модуль безопасности (TPM 2.0)", badge: "Обязательно для FACEIT/Valorant", badgeClass: "badge-green", path: tpmPath, desc: tpmDesc },
-    { title: "2. Безопасная загрузка (Secure Boot)", badge: "Требуется античитами", badgeClass: "badge-green", path: "Boot → Secure Boot → Mode: [Standard] / OS Type: [Windows UEFI Mode] (CSM: Disabled)", desc: "Если пишет ошибку: нажмите Restore Factory Keys." },
-    { title: "3. Профиль памяти (XMP / EXPO)", badge: "FPS & Latency", badgeClass: "badge-orange", path: ramPath, desc: ramDesc },
-    { title: "4. Resizable BAR (Прямой доступ GPU)", badge: "Плавность фреймтайма", badgeClass: "badge-green", path: rebarPath, desc: "Включается строго вместе с Above 4G Decoding при отключенном CSM." },
-    { title: "5. Задержки ввода (C-States)", badge: "Внимание: температура", badgeClass: "badge-red", path: cstatesPath, desc: "Устраняет задержку отклика мыши, но повышает нагрев CPU в простое на 5–10°C." }
+  // --- РАЗДЕЛ 1: АНТИЧИТЫ И БЕЗОПАСНОСТЬ ---
+  const securitySteps = [
+    {
+      title: "1. Модуль безопасности (TPM 2.0)",
+      badge: "Обязательно",
+      badgeClass: "badge-green",
+      crumbs: tpmCrumbs,
+      desc: tpmDesc,
+      supported: true
+    },
+    {
+      title: "2. Безопасная загрузка (Secure Boot)",
+      badge: disk === 'mbr' ? "Заблокировано" : "Обязательно",
+      badgeClass: disk === 'mbr' ? "badge-locked" : "badge-green",
+      crumbs: ["Boot", "Secure Boot", "Mode: [Standard]", "OS Type: [Windows UEFI]"],
+      desc: "Защита ядра ОС от руткитов и читов. Для работы Secure Boot обязательно отключение CSM Support [Disabled].",
+      supported: disk !== 'mbr',
+      warning: disk === 'mbr' ? "На вашей системе разметка диска MBR. Включение Secure Boot и отключение CSM приведет к невозможности старта Windows! Сначала конвертируйте диск в GPT через утилиту mbr2gpt." : null
+    },
+    {
+      title: "3. Сброс ключей Secure Boot (При ошибке)",
+      badge: "Решение проблем",
+      badgeClass: "badge-orange",
+      crumbs: ["Boot", "Secure Boot", "Key Management", "Restore Factory Keys: [Execute]"],
+      desc: "Используйте, если статус Secure Boot висит в 'Setup Mode' или античит пишет 'Platform Key not enrolled'.",
+      supported: true
+    }
   ];
 
-  items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <div class="card-header">
-        <span class="card-title">${item.title}</span>
-        <span class="badge ${item.badgeClass}">${item.badge}</span>
-      </div>
-      <div class="path-box">${item.path}</div>
-      <p class="desc">${item.desc}</p>
-    `;
-    container.appendChild(card);
-  });
+  // --- РАЗДЕЛ 2: ПРОИЗВОДИТЕЛЬНОСТЬ И FPS ---
+  const isRamTooLow = ramGb < 16;
+  const isBudgetChipset = vendor.includes('h610') || vendor.includes('a620') || vendor.includes('h510') || vendor.includes('a520');
+  const isRebarBlocked = disk === 'mbr' || isLaptop;
+
+  const perfSteps = [
+    {
+      title: "1. Профиль разгона памяти (XMP / EXPO)",
+      badge: isRamTooLow ? "Не рекомендуется" : (isBudgetChipset ? "Ограничено" : "FPS & Latency"),
+      badgeClass: isRamTooLow || isBudgetChipset ? "badge-locked" : "badge-orange",
+      crumbs: ramCrumbs,
+      desc: ramDesc,
+      supported: !isBudgetChipset,
+      warning: isRamTooLow ? "Обнаружено менее 16 ГБ ОЗУ (" + ramGb + " ГБ). На некоторых модулях активация XMP может вызвать нестабильность. Рекомендуется сначала установить 16+ ГБ в двухканальном режиме." : (channels === 'single' ? "ОЗУ установлена в один канал (Single Channel). Профиль XMP не компенсирует отсутствие второго канала памяти. Рекомендуется установить 2 модуля." : null)
+    },
+    {
+      title: "2. Resizable BAR (Прямой доступ GPU)",
+      badge: isRebarBlocked ? "Не поддерживается" : "Фреймтайм",
+      badgeClass: isRebarBlocked ? "badge-locked" : "badge-green",
+      crumbs: rebarCrumbs,
+      desc: "Позволяет процессору адресовать всю видеопамять видеокарты сразу, устраняя просадки кадров в соревновательных играх.",
+      supported: !isRebarBlocked,
+      warning: disk === 'mbr' ? "На вашей материнской плате невозможно включить ReBAR, так как диск размечен в MBR. ReBAR аппаратно требует чистого UEFI и разметки GPT." : (isLaptop ? "На ноутбуках функция ReBAR управляется видеодрайвером и заблокирована в BIOS производителем." : null)
+    },
+    {
+      title: "3. Задержки отклика (C-States Control)",
+      badge: isLaptop ? "Заблокировано" : "Инпут-лаг",
+      badgeClass: isLaptop ? "badge-locked" : "badge-red",
+      crumbs: cstatesCrumbs,
+      desc: "Запрещает ядрам процессора уходить в глубокий сон, устраняя задержку первого клика мыши.",
+      supported: !isLaptop,
+      warning: isLaptop ? "На ноутбуках отключение C-States заблокировано для предотвращения критического перегрева аккумулятора и процессора." : "Внимание: отключение C-States повышает температуру процессора в простое на 5–10°C. Не используйте на слабых кулерах."
+    },
+    {
+      title: "4. Фиксация опорной шины (Spread Spectrum)",
+      badge: isLaptop ? "Заблокировано" : "Стабильность",
+      badgeClass: isLaptop ? "badge-locked" : "badge-orange",
+      crumbs: spreadCrumbs,
+      desc: "Удерживает шину BCLK строго на 100.00 MHz, предотвращая плавающие колебания тактовой частоты и микрофризы.",
+      supported: !isLaptop,
+      warning: isLaptop ? "Функция недоступна в OEM-прошивках ноутбуков." : null
+    }
+  ];
+
+  function renderList(containerId, list, prefix) {
+    const container = document.getElementById(containerId);
+    list.forEach((step, idx) => {
+      const card = document.createElement('div');
+      card.className = 'step-card' + (step.supported ? '' : ' disabled');
+      card.id = prefix + '-step-' + idx;
+
+      const pathHtml = step.crumbs.map((c, i) => {
+        const isLast = i === step.crumbs.length - 1;
+        const arrow = isLast ? '' : '<span class="arrow">›</span>';
+        return `<span class="crumb ${isLast ? 'action' : ''}">${c}</span>${arrow}`;
+      }).join(' ');
+
+      let alertHtml = '';
+      if (step.warning) {
+        const boxClass = step.supported ? 'warning-box' : 'danger-box';
+        const icon = step.supported ? '⚠️' : '🚫';
+        alertHtml = `<div class="${boxClass}"><span>${icon}</span><span>${step.warning}</span></div>`;
+      }
+
+      card.innerHTML = `
+        <div class="step-top">
+          <div class="step-left">
+            <input type="checkbox" class="step-checkbox" ${step.supported ? '' : 'disabled'} onchange="toggleStep('${prefix}-step-${idx}', this.checked)">
+            <span class="step-title">${step.title}</span>
+          </div>
+          <span class="badge ${step.badgeClass}">${step.badge}</span>
+        </div>
+        <div class="path-container">${pathHtml}</div>
+        <p class="step-desc">${step.desc}</p>
+        ${alertHtml}
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  renderList('tab-security-content', securitySteps, 'sec');
+  renderList('tab-perf-content', perfSteps, 'perf');
+
+  function toggleStep(elementId, isDone) {
+    const card = document.getElementById(elementId);
+    if (isDone) card.classList.add('done');
+    else card.classList.remove('done');
+  }
 </script>
 </body>
 </html>
