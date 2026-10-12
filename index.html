@@ -24,14 +24,13 @@
       background-color: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      padding: 16px 12px 40px;
+      padding: 16px 12px 42px;
       display: flex;
       justify-content: center;
       overflow-x: hidden;
     }
     .wrapper { width: 100%; max-width: 500px; }
 
-    /* Анимации */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
@@ -50,7 +49,6 @@
       animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Шапка */
     .header {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -81,7 +79,22 @@
     }
     .pill b { color: #fff; }
 
-    /* Горячие клавиши и кнопка Плана Б */
+    /* Предупреждения безопасности ядра (BitLocker, GOP) */
+    .critical-alert {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      animation: fadeInUp 0.35s ease;
+    }
+    .critical-alert-icon { font-size: 18px; flex-shrink: 0; }
+    .critical-alert-title { font-size: 12px; font-weight: 700; color: #FCA5A5; margin-bottom: 4px; }
+    .critical-alert-text { font-size: 11px; color: #E5E7EB; line-height: 1.45; }
+
     .action-bar {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -127,7 +140,6 @@
       background: rgba(239, 68, 68, 0.2);
     }
 
-    /* Вкладки */
     .tab-switch {
       display: flex;
       gap: 6px;
@@ -157,7 +169,6 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.4);
     }
 
-    /* Карточки шагов */
     .step-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -167,21 +178,30 @@
       transition: all 0.25s ease;
       opacity: 0;
     }
+    .step-card.active-state {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.04);
+    }
+    .step-card.need-setup {
+      border-color: rgba(245, 158, 11, 0.4);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.06);
+    }
     .step-card.disabled {
       background: var(--disabled-bg);
       border-color: rgba(255, 255, 255, 0.05);
       opacity: 0.65;
     }
     .step-card.done {
-      opacity: 0.5;
+      opacity: 0.55;
       border-color: rgba(16, 185, 129, 0.3);
-      background: rgba(16, 185, 129, 0.02);
     }
+
     .step-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
+      gap: 8px;
     }
     .step-left { display: flex; align-items: center; gap: 8px; }
     .step-checkbox {
@@ -189,10 +209,10 @@
       height: 18px;
       accent-color: var(--green);
       cursor: pointer;
-      transition: transform 0.2s ease;
     }
-    .step-checkbox:active { transform: scale(1.2); }
     .step-title { font-size: 13px; font-weight: 700; color: #fff; }
+    
+    .badge-group { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
     .badge {
       font-size: 10px;
       font-weight: 700;
@@ -200,6 +220,7 @@
       border-radius: 4px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      white-space: nowrap;
     }
     .badge-green { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.3); }
     .badge-orange { background: rgba(245, 158, 11, 0.15); color: var(--orange); border: 1px solid rgba(245, 158, 11, 0.3); }
@@ -234,6 +255,7 @@
     }
     .arrow { color: #4B5563; font-size: 10px; }
     .step-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; margin-bottom: 6px; }
+    
     .warning-box {
       background: rgba(245, 158, 11, 0.08);
       border: 1px solid rgba(245, 158, 11, 0.25);
@@ -259,7 +281,6 @@
       margin-top: 6px;
     }
 
-    /* Модальное окно: План Б (Экстренный сброс) */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -313,7 +334,6 @@
     .method-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
     .method-desc b { color: #E5E7EB; }
 
-    /* Векторная схема батарейки CR2032 */
     .cmos-diagram {
       background: #090B0F;
       border: 1px solid var(--border);
@@ -321,16 +341,48 @@
       padding: 12px;
       margin-top: 10px;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
     }
-    .diagram-caption { font-size: 11px; color: #9CA3AF; text-align: center; }
+    .cmos-icon-wrap {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cmos-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+    .cmos-info-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #FCA5A5;
+    }
+    .cmos-info-sub {
+      font-size: 11px;
+      color: #9CA3AF;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .diagram-caption {
+      font-size: 11px;
+      color: #6B7280;
+      margin-top: 8px;
+      line-height: 1.4;
+      display: block;
+    }
   </style>
 </head>
 <body>
 
 <div class="wrapper">
+  <!-- Блок критических системных предупреждений (BitLocker / GOP) -->
+  <div id="safety-alerts-container"></div>
+
   <!-- Шапка со спецификацией -->
   <div class="header animate-in" style="animation-delay: 0.05s;">
     <div class="brand-row">
@@ -349,11 +401,10 @@
     </div>
   </div>
 
-  <!-- Панель быстрого действия: горячие клавиши + аккуратная кнопка План Б -->
   <div class="action-bar animate-in" style="animation-delay: 0.1s;">
     <div class="hotkey-box">
       <span class="hotkey-label">Вход в BIOS:</span>
-      <div class="hotkey-tags">
+      <div class="hotkey-tags" id="hotkeys-container">
         <span class="hotkey-tag">DEL</span>
         <span class="hotkey-tag">F2</span>
       </div>
@@ -364,18 +415,15 @@
     </button>
   </div>
 
-  <!-- Вкладки профилей -->
   <div class="tab-switch animate-in" style="animation-delay: 0.15s;">
     <button class="tab-btn active" id="tab-btn-sec" onclick="switchTab('security')">🛡️ Античиты (FACEIT / Riot)</button>
     <button class="tab-btn" id="tab-btn-perf" onclick="switchTab('perf')">⚡ Производительность & FPS</button>
   </div>
 
-  <!-- Контент вкладок -->
   <div id="tab-security-content"></div>
   <div id="tab-perf-content" style="display: none;"></div>
 </div>
 
-<!-- Модальное окно "План Б: Экстренный сброс настроек" -->
 <div class="modal-overlay" id="plan-b-modal" onclick="closePlanBOnBackdrop(event)">
   <div class="modal-box">
     <div class="modal-header">
@@ -389,14 +437,14 @@
     <div class="method-card">
       <div class="method-title">1. Мягкий сброс (Если ПК запускается)</div>
       <div class="method-desc">
-        Перезагрузите ПК, нажимайте <b>DEL</b> или <b>F2</b> для входа в BIOS. Нажмите клавишу <b>F9</b> (Load Optimized Defaults), затем <b>F10</b> (Save & Exit).
+        Перезагрузите ПК, нажимайте <b id="reset-hotkey">DEL / F2</b> для входа в BIOS. Нажмите клавишу <b>F9</b> (Load Defaults), затем <b>F10</b> (Save & Exit).
       </div>
     </div>
 
     <div class="method-card">
-      <div class="method-title">2. Замыкание джампера (CLRTC / JBAT1)</div>
+      <div class="method-title">2. Замыкание контактов (CLRTC / JBAT1)</div>
       <div class="method-desc">
-        Обесточьте ПК из розетки. Найдите на плате 2 контакта с подписью <b>CLR_CMOS</b> или <b>JBAT1</b> рядом с батарейкой и замкните их отверткой на <b>10 секунд</b>.
+        Обесточьте ПК из розетки. Найдите на плате 2 контакта с надписью <b>CLR_CMOS</b> или <b>JBAT1</b> рядом с батарейкой и замкните их отверткой на <b>10 секунд</b>.
       </div>
     </div>
 
@@ -412,39 +460,30 @@
         </ol>
       </div>
 
-      <!-- Векторная наглядная схема извлечения батарейки -->
       <div class="cmos-diagram">
-        <svg width="220" height="70" viewBox="0 0 220 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Плата фон -->
-          <rect x="5" y="5" width="210" height="60" rx="6" fill="#14171F" stroke="#252D3D" stroke-width="1"/>
-          <!-- Сокет батарейки -->
-          <circle cx="75" cy="35" r="24" fill="#0B0D12" stroke="#374151" stroke-width="2"/>
-          <!-- Батарейка CR2032 -->
-          <circle cx="75" cy="35" r="19" fill="#9CA3AF" stroke="#D1D5DB" stroke-width="1.5"/>
-          <text x="75" y="38" fill="#1F2937" font-size="7" font-family="sans-serif" font-weight="bold" text-anchor="middle">CR2032 3V</text>
-          <!-- Фиксатор / Защелка -->
-          <rect x="94" y="32" width="6" height="6" rx="1" fill="#EF4444"/>
-          <!-- Стрелка нажатия на фиксатор -->
-          <path d="M115 35L103 35M103 35L107 31M103 35L107 39" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round"/>
-          <text x="145" y="33" fill="#FCA5A5" font-size="9" font-family="sans-serif" font-weight="bold">Нажать защелку</text>
-          <text x="145" y="44" fill="#9CA3AF" font-size="8" font-family="sans-serif">Батарейка выйдет сама</text>
-        </svg>
-        <span class="diagram-caption">Аккуратно отожмите металлический язычок защелки вбок</span>
+        <div class="cmos-icon-wrap">
+          <svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="34" cy="34" r="32" fill="#14171F" stroke="#252D3D" stroke-width="2"/>
+            <circle cx="34" cy="34" r="23" fill="#9CA3AF" stroke="#D1D5DB" stroke-width="2"/>
+            <text x="34" y="37" fill="#111827" font-size="8" font-family="sans-serif" font-weight="bold" text-anchor="middle">CR2032</text>
+            <rect x="52" y="30" width="7" height="8" rx="2" fill="#EF4444"/>
+            <path d="M48 34L43 34M43 34L45 31M43 34L45 37" stroke="#EF4444" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="cmos-info">
+          <span class="cmos-info-title">Нажать фиксатор вбок</span>
+          <span class="cmos-info-sub">Отожмите металлический язычок защелки в сторону. Батарейка выйдет из гнезда автоматически.</span>
+        </div>
       </div>
+      <span class="diagram-caption">После извлечения батарейки подождите не менее 5 минут для полной разрядки конденсаторов материнской платы.</span>
     </div>
   </div>
 </div>
 
 <script>
-  function openPlanB() {
-    document.getElementById('plan-b-modal').style.display = 'flex';
-  }
-  function closePlanB() {
-    document.getElementById('plan-b-modal').style.display = 'none';
-  }
-  function closePlanBOnBackdrop(e) {
-    if (e.target.id === 'plan-b-modal') closePlanB();
-  }
+  function openPlanB() { document.getElementById('plan-b-modal').style.display = 'flex'; }
+  function closePlanB() { document.getElementById('plan-b-modal').style.display = 'none'; }
+  function closePlanBOnBackdrop(e) { if (e.target.id === 'plan-b-modal') closePlanB(); }
 
   function switchTab(tab) {
     const secContent = document.getElementById('tab-security-content');
@@ -469,69 +508,165 @@
   const vendor = (urlParams.get('v') || 'gigabyte').toLowerCase();
   const cpu = (urlParams.get('c') || 'intel').toLowerCase();
   const ramType = (urlParams.get('r') || 'ddr4').toUpperCase();
-  const ramGb = parseInt(urlParams.get('gb') || '32', 10);
+  
+  const rawGb = parseInt(urlParams.get('gb'), 10);
+  const ramGb = isNaN(rawGb) ? 16 : rawGb;
+  
   const channels = (urlParams.get('ch') || 'dual').toLowerCase();
   const disk = (urlParams.get('disk') || 'gpt').toLowerCase();
-  const isLaptop = (urlParams.get('laptop') || '0') === '1';
+  const isLaptop = (urlParams.get('laptop') || '0') === '1' || vendor.includes('laptop');
   const hasXmp = (urlParams.get('xmp') || '1') === '1';
 
-  // Детект лок-чипсетов (H410, H510, H610, A320, A520, A620)
-  const isBudgetChipset = vendor.includes('h610') || vendor.includes('h510') || vendor.includes('h410') || vendor.includes('a620') || vendor.includes('a520') || vendor.includes('a320');
+  // Флаги безопасности ядра и оборудования
+  const isBitlockerActive = (urlParams.get('bitlocker') || '0') === '1';
+  const hasUefiGop = (urlParams.get('gop') || '1') === '1';
 
+  // Флаги текущего состояния настроек
+  const isTpmOn = (urlParams.get('tpm_on') || '0') === '1';
+  const isSbOn = (urlParams.get('sb_on') || '0') === '1';
+  const isXmpOn = (urlParams.get('xmp_on') || '0') === '1';
+  const isRebarOn = (urlParams.get('rebar_on') || '0') === '1';
+
+  // Корректный учет блокировок чипсетов (Intel H-серия блокирует, AMD A-серия РАЗРЕШАЕТ XMP/DOCP)
+  const isIntelHSeriesLocked = cpu === 'intel' && (vendor.includes('h610') || vendor.includes('h510') || vendor.includes('h410') || vendor.includes('h310') || vendor.includes('h110'));
+  const isAmiOem = vendor.includes('ami') || vendor.includes('huanan') || vendor.includes('machinist') || vendor.includes('jginyue');
+
+  // Отображение шапки
   document.getElementById('pill-vendor').innerHTML = 'Плата: <b>' + vendor.toUpperCase() + '</b>';
   document.getElementById('pill-cpu').innerHTML = 'ЦПУ: <b>' + cpu.toUpperCase() + '</b>';
   document.getElementById('pill-ram').innerHTML = 'ОЗУ: <b>' + ramGb + ' ГБ ' + ramType + ' (' + (channels === 'single' ? 'Single ⚠️' : 'Dual') + ')</b>';
   document.getElementById('pill-disk').innerHTML = 'Диск: <b>' + disk.toUpperCase() + (disk === 'mbr' ? ' ❌' : '') + '</b>';
 
-  let tpmCrumbs = ["Settings", "Miscellaneous", "AMD CPU fTPM: [Enabled]"];
-  let tpmDesc = "Обязательно для FACEIT Anti-Cheat и Riot Vanguard.";
-  let ramCrumbs = ["Tweaker", "Extreme Memory Profile: [Profile 1]"];
-  let ramDesc = "Активация паспортного разгона оперативной памяти.";
-  let rebarCrumbs = ["Settings", "IO Ports", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
-  let cstatesCrumbs = ["Tweaker", "Advanced CPU Settings", "C-States: [Disabled]"];
-  let spreadCrumbs = ["Tweaker", "Spread Spectrum: [Disabled]"];
+  // Горячие клавиши входа под вендора
+  const hotkeyContainer = document.getElementById('hotkeys-container');
+  if (vendor.includes('asus')) {
+    hotkeyContainer.innerHTML = '<span class="hotkey-tag">DEL</span><span class="hotkey-tag">F2</span>';
+  } else if (vendor.includes('msi')) {
+    hotkeyContainer.innerHTML = '<span class="hotkey-tag">DEL</span>';
+  } else if (vendor.includes('asrock')) {
+    hotkeyContainer.innerHTML = '<span class="hotkey-tag">DEL</span><span class="hotkey-tag">F2</span>';
+  } else if (isLaptop) {
+    hotkeyContainer.innerHTML = '<span class="hotkey-tag">F2</span><span class="hotkey-tag">Fn+F2</span><span class="hotkey-tag">Novo Button</span>';
+  }
 
+  // Отрисовка критических щитов безопасности (BitLocker / GOP)
+  const safetyContainer = document.getElementById('safety-alerts-container');
+  let safetyHtml = '';
+
+  if (isBitlockerActive) {
+    safetyHtml += `
+      <div class="critical-alert">
+        <span class="critical-alert-icon">⚠️</span>
+        <div>
+          <div class="critical-alert-title">ВНИМАНИЕ: ДИСК ЗАШИФРОВАН BITLOCKER!</div>
+          <div class="critical-alert-text">
+            Перед включением TPM, обновлением ключей Secure Boot или сбросом BIOS <b>обязательно сохраните 48-значный ключ восстановления BitLocker</b> на смартфон (из учетной записи Microsoft или параметров Windows). Иначе Windows заблокирует вход!
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (!hasUefiGop) {
+    safetyHtml += `
+      <div class="critical-alert">
+        <span class="critical-alert-icon">🚫</span>
+        <div>
+          <div class="critical-alert-title">ОПАСНОСТЬ ЧЕРНОГО ЭКРАНА: СТАРАЯ ВИДЕОКАРТА</div>
+          <div class="critical-alert-text">
+            Ваша видеокарта не поддерживает чистый UEFI GOP-драйвер. Отключение CSM Support в BIOS приведет к <b>полному отсутствию изображения на мониторе</b>. Не отключайте CSM без обновления видеокарты!
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  safetyContainer.innerHTML = safetyHtml;
+
+  // Базовые пути по умолчанию
+  let tpmCrumbs = cpu === 'intel' 
+    ? ["Security", "Intel Platform Trust (PTT): [Enabled]"]
+    : ["Security", "AMD CPU fTPM Switch: [Enabled]"];
+  let tpmDesc = "Обязательно для работы античитов FACEIT и Riot Vanguard.";
+  
+  let ramCrumbs = cpu === 'amd' 
+    ? ["OC Tweaker", "EXPO / DOCP: [Profile 1]"]
+    : ["OC Tweaker", "Extreme Memory Profile: [Profile 1]"];
+  let ramDesc = "Активация паспортной частоты оперативной памяти.";
+  
+  let rebarCrumbs = ["PCI Settings", "Above 4G Decoding: [Enabled]", "Re-Size BAR: [Auto]"];
+  let cstatesCrumbs = ["CPU Power Mgmt", "C-States: [Disabled]"];
+  let spreadCrumbs = ["Clock Tweaker", "Spread Spectrum: [Disabled]"];
+
+  // Матрица точных вендорских путей
   if (vendor.includes('gigabyte')) {
     if (cpu === 'intel') {
       tpmCrumbs = ["Settings", "Miscellaneous", "Intel PTT: [Enabled]"];
-      if (ramType === 'DDR4') {
-        ramCrumbs.push("Gear Mode: [Gear 1]");
-        ramDesc += " Режим Gear 1 обеспечивает минимальный инпут-лаг.";
-      } else {
-        ramDesc += " Для DDR5 первый запуск после включения XMP может длиться до 2 минут (тренировка памяти).";
-      }
+      ramCrumbs = ramType === 'DDR4' 
+        ? ["Tweaker", "Extreme Memory Profile: [Profile 1]", "Gear Mode: [Gear 1]"]
+        : ["Tweaker", "Extreme Memory Profile: [Profile 1]"];
+    } else {
+      tpmCrumbs = ["Settings", "Miscellaneous", "AMD CPU fTPM: [Enabled]"];
+      ramCrumbs = ["Tweaker", "Extreme Memory Profile: [Profile 1]"];
     }
+    rebarCrumbs = ["Settings", "IO Ports", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
+    cstatesCrumbs = ["Tweaker", "Advanced CPU Settings", "C-States: [Disabled]"];
+    spreadCrumbs = ["Tweaker", "Spread Spectrum: [Disabled]"];
   } else if (vendor.includes('asus')) {
-    tpmCrumbs = cpu === 'intel' ? ["Advanced", "PCH-FW Config", "PTT: [Enable]"] : ["Advanced", "AMD fTPM", "Firmware TPM: [Enable]"];
+    tpmCrumbs = cpu === 'intel' 
+      ? ["Advanced", "PCH-FW Configuration", "PTT: [Enable]"]
+      : ["Advanced", "AMD fTPM configuration", "Firmware TPM: [Enable]"];
     ramCrumbs = ["Ai Tweaker", "Ai Overclock Tuner", cpu === 'amd' ? "EXPO I / DOCP" : "XMP I"];
     rebarCrumbs = ["Advanced", "PCI Subsystem", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
     cstatesCrumbs = ["Ai Tweaker", "CPU Power Mgmt", "C-states: [Disabled]"];
     spreadCrumbs = ["Ai Tweaker", "BCLK Spread Spectrum: [Disabled]"];
   } else if (vendor.includes('msi')) {
-    tpmCrumbs = cpu === 'intel' ? ["Security", "Trusted Computing", "Security Device: [Enable]"] : ["Security", "Trusted Computing", "AMD fTPM: [Enabled]"];
+    tpmCrumbs = cpu === 'intel' 
+      ? ["Security", "Trusted Computing", "Security Device: [Enable]"]
+      : ["Security", "Trusted Computing", "AMD fTPM: [Enabled]"];
     ramCrumbs = ["OC Menu", "DRAM Setting", cpu === 'amd' ? "EXPO: [Profile 1]" : "A-XMP: [Profile 1]"];
     rebarCrumbs = ["Settings", "PCIe Subsystem", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
     cstatesCrumbs = ["OC Menu", "Advanced CPU Config", "Intel C-State: [Disabled]"];
+  } else if (vendor.includes('asrock')) {
+    tpmCrumbs = cpu === 'intel'
+      ? ["Security", "Intel(R) Platform Trust Technology: [Enabled]"]
+      : ["Advanced", "CPU Configuration", "AMD fTPM Switch: [AMD CPU fTPM]"];
+    ramCrumbs = ["OC Tweaker", "DRAM Configuration", cpu === 'amd' ? "Load EXPO Setting" : "Load XMP Setting: [Profile 1]"];
+    rebarCrumbs = ["Advanced", "PCI Configuration", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
+    cstatesCrumbs = ["Advanced", "CPU Configuration", "CPU C States Support: [Disabled]"];
+  } else if (isAmiOem) {
+    tpmCrumbs = ["Advanced", "Trusted Computing", "Security Device Support: [Enabled]"];
+    ramCrumbs = ["Advanced", "Memory Configuration", "Memory Frequency / Profile"];
+    rebarCrumbs = ["Advanced", "PCI Subsystem Settings", "Above 4G: [Enabled]"];
   }
 
-  // РАЗДЕЛ 1: АНТИЧИТЫ И БЕЗОПАСНОСТЬ
+  // --- ВКЛАДКА 1: АНТИЧИТЫ И БЕЗОПАСНОСТЬ ---
+  const isCsmBlocked = disk === 'mbr' || !hasUefiGop;
+  let secureBootWarning = null;
+  if (disk === 'mbr') {
+    secureBootWarning = "На вашей системе разметка накопителя MBR. Включение Secure Boot и отключение CSM приведет к невозможности запуска Windows! Сначала конвертируйте диск в GPT через системную утилиту mbr2gpt.";
+  } else if (!hasUefiGop) {
+    secureBootWarning = "Ваша видеокарта не поддерживает чистый UEFI. Не отключайте CSM Support во избежание черного экрана!";
+  }
+
   const securitySteps = [
     {
       title: "1. Модуль безопасности (TPM 2.0)",
-      badge: "Обязательно",
-      badgeClass: "badge-green",
+      badge: isTpmOn ? "Включено" : "Требуется включить",
+      badgeClass: isTpmOn ? "badge-green" : "badge-orange",
       crumbs: tpmCrumbs,
-      desc: tpmDesc,
-      supported: true
+      desc: isTpmOn ? "Криптомодуль TPM 2.0 уже активен. Античиты имеют к нему прямой доступ." : tpmDesc,
+      supported: true,
+      alreadyActive: isTpmOn
     },
     {
       title: "2. Безопасная загрузка (Secure Boot)",
-      badge: disk === 'mbr' ? "Заблокировано" : "Обязательно",
-      badgeClass: disk === 'mbr' ? "badge-locked" : "badge-green",
+      badge: isCsmBlocked ? "Заблокировано" : (isSbOn ? "Включено" : "Требуется включить"),
+      badgeClass: isCsmBlocked ? "badge-locked" : (isSbOn ? "badge-green" : "badge-orange"),
       crumbs: ["Boot", "Secure Boot", "Mode: [Standard]", "OS Type: [Windows UEFI]"],
-      desc: "Защита ядра ОС от руткитов и читов. Для работы Secure Boot обязательно отключение CSM Support [Disabled].",
-      supported: disk !== 'mbr',
-      warning: disk === 'mbr' ? "На вашей системе разметка диска MBR. Включение Secure Boot и отключение CSM приведет к невозможности старта Windows! Сначала конвертируйте диск в GPT через утилиту mbr2gpt." : null
+      desc: isSbOn ? "Режим Secure Boot активен. Ядро Windows аппаратно защищено от руткитов." : "Требует обязательного отключения CSM Support [Disabled].",
+      supported: !isCsmBlocked,
+      alreadyActive: isSbOn,
+      warning: secureBootWarning
     },
     {
       title: "3. Сброс ключей Secure Boot (При ошибке)",
@@ -539,31 +674,36 @@
       badgeClass: "badge-orange",
       crumbs: ["Boot", "Secure Boot", "Key Management", "Restore Factory Keys: [Execute]"],
       desc: "Используйте, если статус Secure Boot висит в 'Setup Mode' или античит пишет 'Platform Key not enrolled'.",
-      supported: true
+      supported: true,
+      alreadyActive: false
     }
   ];
 
-  // РАЗДЕЛ 2: ПРОИЗВОДИТЕЛЬНОСТЬ И FPS
-  const isXmpSupported = hasXmp && !isBudgetChipset;
+  // --- ВКЛАДКА 2: ПРОИЗВОДИТЕЛЬНОСТЬ И FPS ---
+  const isXmpSupported = hasXmp && !isIntelHSeriesLocked && !isLaptop;
   let xmpWarning = null;
-  let xmpBadge = "FPS & Latency";
-  let xmpBadgeClass = "badge-orange";
+  let xmpBadge = isXmpOn ? "XMP Активен" : "Требуется включить";
+  let xmpBadgeClass = isXmpOn ? "badge-green" : "badge-orange";
 
-  if (!hasXmp) {
+  if (isLaptop) {
+    xmpBadge = "Заблокировано в OEM";
+    xmpBadgeClass = "badge-locked";
+    xmpWarning = "В прошивках ноутбуков оверклокинг ОЗУ заблокирован производителем для сохранения температурного режима.";
+  } else if (!hasXmp) {
     xmpBadge = "JEDEC (Без XMP)";
     xmpBadgeClass = "badge-locked";
-    xmpWarning = "Установленная оперативная память работает по стандартному профилю JEDEC без аппаратного разгона XMP/EXPO. В меню BIOS этот пункт будет отсутствовать — планки уже работают на штатной частоте.";
-  } else if (isBudgetChipset) {
-    xmpBadge = "Ограничено чипсетом";
+    xmpWarning = "Установленная память работает по стандартному профилю JEDEC без аппаратного сертификата разгона. В меню BIOS этот пункт будет отсутствовать — планки уже работают на заводской частоте.";
+  } else if (isIntelHSeriesLocked) {
+    xmpBadge = "Ограничено Intel H-чипсетом";
     xmpBadgeClass = "badge-locked";
-    xmpWarning = "Материнская плата на бюджетном чипсете (" + vendor.toUpperCase() + ") аппаратно блокирует разгон памяти выше базовой частоты контроллера процессора. Профиль XMP заблокирован в BIOS.";
+    xmpWarning = "На бюджетных чипсетах Intel H-серии разгон памяти заблокирован на уровне Intel ME. Модули работают на предельной частоте контроллера процессора.";
   } else if (ramGb < 16) {
     xmpWarning = "Обнаружено менее 16 ГБ ОЗУ (" + ramGb + " ГБ). На некоторых модулях XMP может работать нестабильно.";
   } else if (channels === 'single') {
     xmpWarning = "Память работает в одноканальном режиме (Single Channel). Для раскрытия потенциала рекомендуется второй модуль.";
   }
 
-  const isRebarBlocked = disk === 'mbr' || isLaptop;
+  const isRebarBlocked = isCsmBlocked || isLaptop;
 
   const perfSteps = [
     {
@@ -571,18 +711,20 @@
       badge: xmpBadge,
       badgeClass: xmpBadgeClass,
       crumbs: isXmpSupported ? ramCrumbs : ["Tweaker", "JEDEC Standard (Штатный режим)"],
-      desc: isXmpSupported ? ramDesc : "Память функционирует на стандартной заводской частоте. Пропустите этот пункт.",
+      desc: isXmpOn ? "Память уже работает на повышенной частоте разгона." : (isXmpSupported ? ramDesc : "Память функционирует на штатной базовой частоте. Пропустите этот шаг."),
       supported: isXmpSupported,
+      alreadyActive: isXmpOn,
       warning: xmpWarning
     },
     {
       title: "2. Resizable BAR (Прямой доступ GPU)",
-      badge: isRebarBlocked ? "Не поддерживается" : "Фреймтайм",
-      badgeClass: isRebarBlocked ? "badge-locked" : "badge-green",
+      badge: isRebarBlocked ? "Не поддерживается" : (isRebarOn ? "Включено" : "Требуется включить"),
+      badgeClass: isRebarBlocked ? "badge-locked" : (isRebarOn ? "badge-green" : "badge-orange"),
       crumbs: rebarCrumbs,
-      desc: "Позволяет процессору адресовать всю видеопамять видеокарты сразу, устраняя просадки кадров в соревновательных играх.",
+      desc: isRebarOn ? "Resizable BAR уже активен и используется видеодрайвером." : "Позволяет процессору адресовать всю видеопамять видеокарты сразу, устраняя микрофризы.",
       supported: !isRebarBlocked,
-      warning: disk === 'mbr' ? "На вашей плате невозможно включить ReBAR, так как диск размечен в MBR. ReBAR требует чистый UEFI и разметку GPT." : (isLaptop ? "На ноутбуках функция ReBAR управляется видеодрайвером и заблокирована в BIOS производителем." : null)
+      alreadyActive: isRebarOn,
+      warning: isCsmBlocked ? "ReBAR требует чистый UEFI и разметку GPT при отключенном CSM." : (isLaptop ? "На ноутбуках функция управляется видеодрайвером и скрыта из BIOS." : null)
     },
     {
       title: "3. Задержки отклика (C-States Control)",
@@ -591,15 +733,17 @@
       crumbs: cstatesCrumbs,
       desc: "Запрещает ядрам процессора уходить в глубокий сон, устраняя задержку первого клика мыши.",
       supported: !isLaptop,
-      warning: isLaptop ? "На ноутбуках отключение C-States заблокировано для предотвращения перегрева аккумулятора и процессора." : "Внимание: отключение C-States повышает температуру процессора в простое на 5–10°C."
+      alreadyActive: false,
+      warning: isLaptop ? "На ноутбуках отключение C-States заблокировано во избежание перегрева батареи." : "Внимание: отключение C-States повышает температуру процессора в простое на 5–10°C."
     },
     {
       title: "4. Фиксация опорной шины (Spread Spectrum)",
       badge: isLaptop ? "Заблокировано" : "Стабильность",
       badgeClass: isLaptop ? "badge-locked" : "badge-orange",
       crumbs: spreadCrumbs,
-      desc: "Удерживает шину BCLK строго на 100.00 MHz, предотвращая плавающие колебания тактовой частоты и микрофризы.",
+      desc: "Удерживает шину BCLK строго на 100.00 MHz, устраняя микроколебания частоты CPU/RAM. Настройка 100% безопасна для железа.",
       supported: !isLaptop,
+      alreadyActive: false,
       warning: isLaptop ? "Функция недоступна в OEM-прошивках ноутбуков." : null
     }
   ];
@@ -608,7 +752,13 @@
     const container = document.getElementById(containerId);
     list.forEach((step, idx) => {
       const card = document.createElement('div');
-      card.className = 'step-card animate-in' + (step.supported ? '' : ' disabled');
+      
+      let stateClass = '';
+      if (!step.supported) stateClass = ' disabled';
+      else if (step.alreadyActive) stateClass = ' active-state done';
+      else stateClass = ' need-setup';
+
+      card.className = 'step-card animate-in' + stateClass;
       card.id = prefix + '-step-' + idx;
       card.style.animationDelay = (0.2 + idx * 0.06) + 's';
 
@@ -625,13 +775,17 @@
         alertHtml = `<div class="${boxClass}"><span>${icon}</span><span>${step.warning}</span></div>`;
       }
 
+      const isChecked = step.alreadyActive ? 'checked' : '';
+
       card.innerHTML = `
         <div class="step-top">
           <div class="step-left">
-            <input type="checkbox" class="step-checkbox" ${step.supported ? '' : 'disabled'} onchange="toggleStep('${prefix}-step-${idx}', this.checked)">
+            <input type="checkbox" class="step-checkbox" ${isChecked} ${step.supported ? '' : 'disabled'} onchange="toggleStep('${prefix}-step-${idx}', this.checked)">
             <span class="step-title">${step.title}</span>
           </div>
-          <span class="badge ${step.badgeClass}">${step.badge}</span>
+          <div class="badge-group">
+            <span class="badge ${step.badgeClass}">${step.badge}</span>
+          </div>
         </div>
         <div class="path-container">${pathHtml}</div>
         <p class="step-desc">${step.desc}</p>
