@@ -31,23 +31,9 @@
     }
     .wrapper { width: 100%; max-width: 500px; }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-      70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .animate-in {
-      animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+    .animate-in { animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
     .header {
       background: var(--card-bg);
@@ -62,10 +48,7 @@
       display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted);
       background: rgba(16, 185, 129, 0.08); padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.2);
     }
-    .status-dot {
-      width: 7px; height: 7px; border-radius: 50%; background: var(--green);
-      animation: pulseGlow 2s infinite;
-    }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulseGlow 2s infinite; }
     .title { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
     .pills { display: flex; flex-wrap: wrap; gap: 6px; }
     .pill {
@@ -79,7 +62,7 @@
     }
     .pill b { color: #fff; }
 
-    /* Баннеры состояний (Готово / Тупик / Ошибки Windows / BitLocker) */
+    /* Баннеры системных состояний */
     .status-banner {
       border-radius: 10px;
       padding: 14px;
@@ -89,25 +72,13 @@
       align-items: flex-start;
       animation: fadeInUp 0.35s ease;
     }
-    .banner-ready {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.4);
-    }
+    .banner-ready { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.4); }
     .banner-ready .banner-title { color: #6EE7B7; }
-    .banner-legacy {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.35);
-    }
+    .banner-legacy { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.35); }
     .banner-legacy .banner-title { color: #FCA5A5; }
-    .banner-win-error {
-      background: rgba(245, 158, 11, 0.1);
-      border: 1px solid rgba(245, 158, 11, 0.4);
-    }
+    .banner-win-error { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.4); }
     .banner-win-error .banner-title { color: #FCD34D; }
-    .banner-danger {
-      background: rgba(239, 68, 68, 0.12);
-      border: 1px solid rgba(239, 68, 68, 0.45);
-    }
+    .banner-danger { background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.45); }
     .banner-danger .banner-title { color: #F87171; }
 
     .banner-icon { font-size: 20px; flex-shrink: 0; line-height: 1.2; }
@@ -139,14 +110,109 @@
       cursor: pointer;
       flex-shrink: 0;
     }
-    .copy-btn:active { background: var(--accent); }
 
-    .action-bar {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 8px;
-      margin-bottom: 14px;
+    /* СИМУЛЯТОРЫ ИНТЕРФЕЙСА BIOS */
+    .bios-screen-sim {
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      border: 1px solid #283347;
+      font-family: monospace;
+      font-size: 11px;
     }
+    .bios-sim-header {
+      padding: 6px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+    }
+    .bios-sim-tabs {
+      display: flex;
+      overflow-x: auto;
+      gap: 2px;
+      padding: 4px 6px;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .sim-tab {
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+      color: #9CA3AF;
+      white-space: nowrap;
+    }
+    .sim-tab.active { font-weight: bold; }
+    
+    .theme-asus { background: #0F1218; border-color: #EF4444; }
+    .theme-asus .bios-sim-header { background: #1F2430; color: #F87171; border-bottom: 1px solid #EF4444; }
+    .theme-asus .sim-tab.active { background: #EF4444; color: #fff; }
+
+    .theme-msi { background: #121013; border-color: #DC2626; }
+    .theme-msi .bios-sim-header { background: #1A171B; color: #EF4444; border-bottom: 1px solid #7F1D1D; }
+    .theme-msi .sim-tab.active { background: #DC2626; color: #fff; }
+
+    .theme-gigabyte { background: #14120E; border-color: #F97316; }
+    .theme-gigabyte .bios-sim-header { background: #201A14; color: #FB923C; border-bottom: 1px solid #C2410C; }
+    .theme-gigabyte .sim-tab.active { background: #F97316; color: #fff; }
+
+    .theme-asrock { background: #0D131A; border-color: #0284C7; }
+    .theme-asrock .bios-sim-header { background: #131E2A; color: #38BDF8; border-bottom: 1px solid #0369A1; }
+    .theme-asrock .sim-tab.active { background: #0284C7; color: #fff; }
+
+    .theme-laptop { background: #0D1117; border-color: #38BDF8; }
+    .theme-laptop .bios-sim-header { background: #161B22; color: #7DD3FC; border-bottom: 1px solid #0284C7; }
+    .theme-laptop .sim-tab.active { background: #0284C7; color: #fff; }
+
+    .theme-legacy { background: #000080; border-color: #C0C0C0; color: #FFFFFF; font-family: "Courier New", monospace; }
+    .theme-legacy .bios-sim-header { background: #0000AA; color: #FFFFFF; border-bottom: 1px solid #C0C0C0; }
+    .theme-legacy .sim-tab.active { background: #FFFFFF; color: #000080; font-weight: bold; }
+
+    /* ШАГ 0 ДЛЯ НОВИЧКА */
+    .beginner-guide-box {
+      background: #121620;
+      border: 1px solid #283347;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .beginner-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #93C5FD;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .beginner-text { font-size: 11px; color: #D1D5DB; line-height: 1.45; }
+    .advanced-key-badge {
+      display: inline-block;
+      background: #1E293B;
+      border: 1px solid #3B82F6;
+      color: #60A5FA;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 11px;
+    }
+    .controls-bar {
+      display: flex;
+      justify-content: space-between;
+      background: #090B0F;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 10px;
+      color: #9CA3AF;
+      margin-top: 4px;
+    }
+    .controls-bar span b { color: #fff; }
+
+    .action-bar { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 14px; }
     .hotkey-box {
       background: #11141C;
       border: 1px solid var(--border);
@@ -156,7 +222,7 @@
       align-items: center;
       justify-content: space-between;
     }
-    .hotkey-label { font-size: 12px; color: var(--text-muted); }
+    .hotkey-label { font-size: 11px; color: var(--text-muted); }
     .hotkey-tags { display: flex; gap: 4px; }
     .hotkey-tag {
       background: #1C2230;
@@ -217,42 +283,18 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 14px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       transition: all 0.25s ease;
       opacity: 0;
     }
-    .step-card.active-state {
-      border-color: rgba(16, 185, 129, 0.4);
-      background: rgba(16, 185, 129, 0.04);
-    }
-    .step-card.need-setup {
-      border-color: rgba(245, 158, 11, 0.4);
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.06);
-    }
-    .step-card.disabled {
-      background: var(--disabled-bg);
-      border-color: rgba(255, 255, 255, 0.05);
-      opacity: 0.65;
-    }
-    .step-card.done {
-      opacity: 0.55;
-      border-color: rgba(16, 185, 129, 0.3);
-    }
+    .step-card.active-state { border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.04); }
+    .step-card.need-setup { border-color: rgba(245, 158, 11, 0.4); box-shadow: 0 0 12px rgba(245, 158, 11, 0.06); }
+    .step-card.disabled { background: var(--disabled-bg); border-color: rgba(255, 255, 255, 0.05); opacity: 0.65; }
+    .step-card.done { opacity: 0.55; border-color: rgba(16, 185, 129, 0.3); }
 
-    .step-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      gap: 8px;
-    }
+    .step-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 8px; }
     .step-left { display: flex; align-items: center; gap: 8px; }
-    .step-checkbox {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--green);
-      cursor: pointer;
-    }
+    .step-checkbox { width: 18px; height: 18px; accent-color: var(--green); cursor: pointer; }
     .step-title { font-size: 13px; font-weight: 700; color: #fff; }
     
     .badge-group { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
@@ -283,22 +325,34 @@
       font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
       font-size: 11px;
     }
-    .crumb {
-      background: #171C26;
-      border: 1px solid #252D3D;
-      border-radius: 4px;
-      padding: 2px 6px;
-      color: #9CA3AF;
-    }
-    .crumb.action {
-      background: rgba(59, 130, 246, 0.15);
-      border-color: rgba(59, 130, 246, 0.35);
-      color: #93C5FD;
-      font-weight: 700;
-    }
+    .crumb { background: #171C26; border: 1px solid #252D3D; border-radius: 4px; padding: 2px 6px; color: #9CA3AF; }
+    .crumb.action { background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.35); color: #93C5FD; font-weight: 700; }
     .arrow { color: #4B5563; font-size: 10px; }
-    .step-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; margin-bottom: 6px; }
-    
+
+    .action-instruction-box {
+      background: #0B0E14;
+      border: 1px solid #1E2430;
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 11px;
+    }
+    .action-label { color: #9CA3AF; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+    .action-target {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6EE7B7;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-family: monospace;
+    }
+
+    .step-desc { font-size: 11px; color: var(--text-muted); line-height: 1.45; margin-bottom: 6px; }
     .warning-box {
       background: rgba(245, 158, 11, 0.08);
       border: 1px solid rgba(245, 158, 11, 0.25);
@@ -324,7 +378,6 @@
       margin-top: 6px;
     }
 
-    /* Интерактивный каталог ошибок FACEIT */
     .catalog-section {
       margin-top: 22px;
       background: #11141B;
@@ -332,15 +385,7 @@
       border-radius: 12px;
       padding: 14px;
     }
-    .catalog-header {
-      font-size: 13px;
-      font-weight: 700;
-      color: #F3F4F6;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .catalog-header { font-size: 13px; font-weight: 700; color: #F3F4F6; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
     .search-input {
       width: 100%;
       background: var(--card-inner);
@@ -353,32 +398,9 @@
       margin-bottom: 12px;
     }
     .search-input:focus { border-color: var(--accent); }
-    .catalog-item {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 8px;
-      overflow: hidden;
-    }
-    .catalog-title {
-      padding: 10px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #D1D5DB;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .catalog-body {
-      padding: 0 12px 12px;
-      font-size: 11px;
-      color: var(--text-muted);
-      line-height: 1.45;
-      border-top: 1px dashed var(--border);
-      padding-top: 8px;
-      display: none;
-    }
+    .catalog-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+    .catalog-title { padding: 10px 12px; font-size: 12px; font-weight: 600; color: #D1D5DB; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .catalog-body { padding: 0 12px 12px; font-size: 11px; color: var(--text-muted); line-height: 1.45; border-top: 1px dashed var(--border); padding-top: 8px; display: none; }
 
     .modal-overlay {
       position: fixed;
@@ -404,58 +426,17 @@
       max-height: 90vh;
       overflow-y: auto;
     }
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 10px;
-    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
     .modal-title { font-size: 15px; font-weight: 700; color: #FCA5A5; display: flex; align-items: center; gap: 8px; }
-    .close-btn {
-      background: #1C2230;
-      border: none;
-      color: var(--text-muted);
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-weight: 700;
-    }
-    .method-card {
-      background: var(--card-inner);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 10px;
-    }
+    .close-btn { background: #1C2230; border: none; color: var(--text-muted); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-weight: 700; }
+    .method-card { background: var(--card-inner); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
     .method-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
     .method-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
     .method-desc b { color: #E5E7EB; }
 
-    .cmos-diagram {
-      background: #090B0F;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .cmos-icon-wrap {
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .cmos-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      min-width: 0;
-    }
+    .cmos-diagram { background: #090B0F; border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-top: 10px; display: flex; align-items: center; gap: 12px; }
+    .cmos-icon-wrap { flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .cmos-info { flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
     .cmos-info-title { font-size: 12px; font-weight: 700; color: #FCA5A5; }
     .cmos-info-sub { font-size: 11px; color: #9CA3AF; line-height: 1.35; word-break: break-word; }
     .diagram-caption { font-size: 11px; color: #6B7280; margin-top: 8px; line-height: 1.4; display: block; }
@@ -464,10 +445,8 @@
 <body>
 
 <div class="wrapper">
-  <!-- Блок динамических баннеров состояний -->
   <div id="status-banner-container"></div>
 
-  <!-- Шапка со спецификацией -->
   <div class="header animate-in" style="animation-delay: 0.05s;">
     <div class="brand-row">
       <span class="brand">Zempi Optimization</span>
@@ -485,9 +464,37 @@
     </div>
   </div>
 
-  <div class="action-bar animate-in" style="animation-delay: 0.1s;">
+  <!-- ВИЗУАЛЬНЫЙ СИМУЛЯТОР BIOS ПОД ВЕНДОРА -->
+  <div class="bios-screen-sim animate-in" style="animation-delay: 0.07s;" id="bios-sim-box">
+    <div class="bios-sim-header">
+      <span id="sim-board-title">UEFI BIOS UTILITY</span>
+      <span id="sim-mode-tag">[ADVANCED MODE]</span>
+    </div>
+    <div class="bios-sim-tabs" id="sim-tabs-container"></div>
+  </div>
+
+  <!-- ШАГ 0 ДЛЯ НОВИЧКА -->
+  <div class="beginner-guide-box animate-in" style="animation-delay: 0.09s;" id="beginner-advanced-box">
+    <div class="beginner-title">
+      <span>💡</span>
+      <span>Шаг 0: Важные правила входа в BIOS</span>
+    </div>
+    <p class="beginner-text" id="beginner-advanced-text">
+      <b>1. Только «Перезагрузка»!</b> Не нажимайте «Завершение работы» — быстрый запуск Windows блокирует опрос клавиатуры. Всегда выбирайте «Пуск ➔ Перезагрузка».<br>
+      <b>2. Клавиши Fn на ноутбуках:</b> Если клавиша F2 меняет звук или яркость, обязательно зажимайте комбинацию <span class="advanced-key-badge">Fn + F2</span>.<br>
+      <b>3. Расширенный режим:</b> В BIOS нажмите <span class="advanced-key-badge" id="advanced-key-label">F7</span> для перехода в <b>Advanced Mode</b>.
+    </p>
+    <div class="controls-bar">
+      <span><b>[Стрелки]</b> Меню</span>
+      <span><b>[Enter]</b> Выбрать</span>
+      <span><b>[ESC]</b> Назад</span>
+      <span><b>[F10]</b> Сохранить</span>
+    </div>
+  </div>
+
+  <div class="action-bar animate-in" style="animation-delay: 0.11s;">
     <div class="hotkey-box">
-      <span class="hotkey-label">Вход в BIOS:</span>
+      <span class="hotkey-label">Запасной вход:</span>
       <div class="hotkey-tags" id="hotkeys-container">
         <span class="hotkey-tag">DEL</span>
         <span class="hotkey-tag">F2</span>
@@ -499,7 +506,7 @@
     </button>
   </div>
 
-  <div class="tab-switch animate-in" style="animation-delay: 0.15s;">
+  <div class="tab-switch animate-in" style="animation-delay: 0.13s;">
     <button class="tab-btn active" id="tab-btn-sec" onclick="switchTab('security')">🛡️ Античиты (FACEIT / Riot)</button>
     <button class="tab-btn" id="tab-btn-perf" onclick="switchTab('perf')">⚡ Производительность & FPS</button>
   </div>
@@ -507,7 +514,6 @@
   <div id="tab-security-content"></div>
   <div id="tab-perf-content" style="display: none;"></div>
 
-  <!-- Нижний интерактивный каталог ошибок FACEIT -->
   <div class="catalog-section" id="catalog-section">
     <div class="catalog-header">
       <span>База частых ошибок FACEIT AC</span>
@@ -518,6 +524,7 @@
   </div>
 </div>
 
+<!-- МОДАЛЬНОЕ ОКНО ПЛАНА «Б» С АДАПТАЦИЕЙ ПОД ПК И НОУТБУКИ -->
 <div class="modal-overlay" id="plan-b-modal" onclick="closePlanBOnBackdrop(event)">
   <div class="modal-box">
     <div class="modal-header">
@@ -529,28 +536,43 @@
     </div>
 
     <div class="method-card">
-      <div class="method-title">1. Мягкий сброс (Если ПК запускается)</div>
+      <div class="method-title">1. Мягкий сброс (Если экран работает)</div>
       <div class="method-desc">
-        Перезагрузите ПК, нажимайте <b id="reset-hotkey">DEL / F2</b> для входа в BIOS. Нажмите клавишу <b>F9</b> (Load Defaults), затем <b>F10</b> (Save & Exit).
+        Перезагрузите систему, нажимайте клавиши входа в BIOS. Нажмите клавишу <b>F9</b> (Load Defaults), затем <b>F10</b> (Save & Exit).
       </div>
     </div>
 
-    <div class="method-card">
+    <!-- БЛОК СБРОСА ДЛЯ НОУТБУКОВ (EC RESET) -->
+    <div class="method-card" id="plan-b-laptop-card" style="display: none; border-color: rgba(59, 130, 246, 0.4);">
+      <div class="method-title" style="color: #93C5FD;">2. Аппаратный сброс ноутбука (EC Reset) — Без разборки корпуса!</div>
+      <div class="method-desc">
+        На ноутбуках нет отдельной батарейки CR2032. Разбирать ноутбук <b>не нужно</b>:
+        <ol style="margin-top: 6px; padding-left: 18px; line-height: 1.5;">
+          <li><b>Отключите зарядное устройство</b> из разъема питания ноутбука.</li>
+          <li>Отключите все флешки, мыши и наушники из USB.</li>
+          <li>Зажмите и удерживайте кнопку включения ноутбука ровно <b>45–60 секунд</b>.</li>
+          <li>Подключите зарядку обратно и включите ноутбук — BIOS сброшен на заводские.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- БЛОК СБРОСА ДЛЯ ДЕСКТОПНЫХ ПК (БАТАРЕЙКА И ДЖАМПЕР) -->
+    <div class="method-card" id="plan-b-desktop-card">
       <div class="method-title">2. Замыкание контактов (CLRTC / JBAT1)</div>
       <div class="method-desc">
         Обесточьте ПК из розетки. Найдите на плате 2 контакта с надписью <b>CLR_CMOS</b> или <b>JBAT1</b> рядом с батарейкой и замкните их отверткой на <b>10 секунд</b>.
       </div>
     </div>
 
-    <div class="method-card" style="border-color: rgba(239, 68, 68, 0.3);">
-      <div class="method-title" style="color: #FCA5A5;">3. Аппаратный сброс (Черный экран / ПК не стартует)</div>
+    <div class="method-card" id="plan-b-battery-card" style="border-color: rgba(239, 68, 68, 0.3);">
+      <div class="method-title" style="color: #FCA5A5;">3. Извлечение батарейки CR2032 (Черный экран на ПК)</div>
       <div class="method-desc">
         Если экран черный и клавиатура не реагирует:
         <ol style="margin-top: 6px; padding-left: 18px; line-height: 1.5;">
           <li><b>Выключите блок питания ПК</b> из розетки (кнопка 0 на БП).</li>
           <li>Зажмите кнопку включения ПК на 5 сек (сброс остаточного тока).</li>
           <li><b>Извлеките батарейку CR2032</b> из материнской платы на <b>5 минут</b>.</li>
-          <li>Вставьте батарейку обратно и включите ПК — BIOS сброшен на заводские.</li>
+          <li>Вставьте батарейку обратно и включите ПК.</li>
         </ol>
       </div>
 
@@ -619,22 +641,31 @@
   
   const channels = (urlParams.get('ch') || 'dual').toLowerCase();
   const disk = (urlParams.get('disk') || 'gpt').toLowerCase();
-  const isLaptop = (urlParams.get('laptop') || '0') === '1' || vendor.includes('laptop');
-  const hasXmp = (urlParams.get('xmp') || '1') === '1';
+  
+  // АППАРАТНАЯ КЛАССИФИКАЦИЯ НОУТБУКОВ
+  const isLaptop = (urlParams.get('laptop') || '0') === '1' || vendor.includes('laptop') || vendor.includes('lenovo') || vendor.includes('thinkpad');
+  const laptopTier = (urlParams.get('laptop_tier') || (isLaptop ? 'office' : 'none')).toLowerCase(); // none | legacy | office | gaming
+  const isGamingLaptop = isLaptop && laptopTier === 'gaming';
+  const isOfficeLaptop = isLaptop && laptopTier === 'office';
+  const isLegacyLaptop = isLaptop && (laptopTier === 'legacy' || ramType === 'DDR3');
 
-  // Флаги состояний и безопасности
-  const isLegacy = (urlParams.get('legacy') || '0') === '1';
+  const hasXmp = (urlParams.get('xmp') || '1') === '1';
+  const hasGpuRebar = (urlParams.get('gpu_rebar') || '1') === '1';
+  const isLegacyDesktop = !isLaptop && ((urlParams.get('legacy') || '0') === '1' || ramType === 'DDR3');
+  const isLegacy = isLegacyLaptop || isLegacyDesktop;
+
   const isReady = (urlParams.get('ready') || '0') === '1';
   const errorCode = (urlParams.get('err') || '').toLowerCase();
   const isBitlockerActive = (urlParams.get('bitlocker') || '0') === '1';
   const hasUefiGop = (urlParams.get('gop') || '1') === '1';
 
-  // Флаги текущего состояния настроек
+  // Текущие статусы
   const isTpmOn = (urlParams.get('tpm_on') || '0') === '1';
   const isSbOn = (urlParams.get('sb_on') || '0') === '1';
   const isVtxOn = (urlParams.get('vtx_on') || '0') === '1';
   const isXmpOn = (urlParams.get('xmp_on') || '0') === '1';
   const isRebarOn = (urlParams.get('rebar_on') || '0') === '1';
+  const isMuxOn = (urlParams.get('mux_on') || '0') === '1';
 
   const isAllReadyAuto = isTpmOn && isSbOn && isVtxOn && disk === 'gpt' && !isLegacy && !errorCode;
   const isSystemReady = isReady || isAllReadyAuto;
@@ -643,24 +674,95 @@
   const isAmiOem = vendor.includes('ami') || vendor.includes('huanan') || vendor.includes('machinist') || vendor.includes('jginyue');
 
   // Отрисовка шапки
-  document.getElementById('pill-vendor').innerHTML = 'Плата: <b>' + vendor.toUpperCase() + '</b>';
+  let platformLabel = vendor.toUpperCase();
+  if (isGamingLaptop) platformLabel = 'Игровой ноутбук (' + vendor.toUpperCase() + ')';
+  else if (isOfficeLaptop) platformLabel = 'Ноутбук (' + vendor.toUpperCase() + ')';
+  else if (isLegacyLaptop) platformLabel = 'Старый ноутбук (' + vendor.toUpperCase() + ')';
+
+  document.getElementById('pill-vendor').innerHTML = 'Платформа: <b>' + platformLabel + '</b>';
   document.getElementById('pill-cpu').innerHTML = 'ЦПУ: <b>' + cpu.toUpperCase() + '</b>';
   document.getElementById('pill-ram').innerHTML = 'ОЗУ: <b>' + ramGb + ' ГБ ' + ramType + ' (' + (channels === 'single' ? 'Single ⚠️' : 'Dual') + ')</b>';
   document.getElementById('pill-disk').innerHTML = 'Диск: <b>' + disk.toUpperCase() + (disk === 'mbr' ? ' ❌' : '') + '</b>';
 
-  // Горячие клавиши
+  // Адаптация Плана «Б» под ноутбуки
+  if (isLaptop) {
+    document.getElementById('plan-b-laptop-card').style.display = 'block';
+    document.getElementById('plan-b-desktop-card').style.display = 'none';
+    document.getElementById('plan-b-battery-card').style.display = 'none';
+  }
+
+  // НАСТРОЙКА ВИЗУАЛЬНОГО СИМУЛЯТОРА BIOS
+  const simBox = document.getElementById('bios-sim-box');
+  const simTitle = document.getElementById('sim-board-title');
+  const simTabs = document.getElementById('sim-tabs-container');
+  const advancedKeyLabel = document.getElementById('advanced-key-label');
+  const beginnerBox = document.getElementById('beginner-advanced-box');
+
+  let tabsList = ["Main", "Ai Tweaker", "Advanced", "Monitor", "Boot", "Tool"];
+  let activeTabName = "Ai Tweaker";
+
+  if (isLaptop) {
+    simBox.className = 'bios-screen-sim animate-in theme-laptop';
+    simTitle.innerText = 'InsydeH2O Setup Utility / Laptop BIOS';
+    tabsList = ["Main", "Advanced", "Security", "Boot", "Exit"];
+    activeTabName = "Security";
+    advancedKeyLabel.innerText = 'Fn + F2';
+    if (vendor.includes('lenovo')) {
+      advancedKeyLabel.innerText = 'Fn+F2 или Novo Button';
+    }
+  } else if (vendor.includes('asus')) {
+    simBox.className = 'bios-screen-sim animate-in theme-asus';
+    simTitle.innerText = 'ASUS UEFI BIOS UTILITY';
+    tabsList = ["Main", "Ai Tweaker", "Advanced", "Monitor", "Boot", "Tool"];
+    activeTabName = "Ai Tweaker";
+    advancedKeyLabel.innerText = 'F7';
+  } else if (vendor.includes('msi')) {
+    simBox.className = 'bios-screen-sim animate-in theme-msi';
+    simTitle.innerText = 'MSI CLICK BIOS 5';
+    tabsList = ["SETTINGS", "OC", "M-FLASH", "HARDWARE MONITOR", "BOARD EXPLORER"];
+    activeTabName = "OC";
+    advancedKeyLabel.innerText = 'F7';
+  } else if (vendor.includes('gigabyte')) {
+    simBox.className = 'bios-screen-sim animate-in theme-gigabyte';
+    simTitle.innerText = 'GIGABYTE UEFI DUALBIOS';
+    tabsList = ["Favorites", "Tweaker", "Settings", "System Info", "Boot", "Save & Exit"];
+    activeTabName = "Tweaker";
+    advancedKeyLabel.innerText = 'F2';
+  } else if (vendor.includes('asrock')) {
+    simBox.className = 'bios-screen-sim animate-in theme-asrock';
+    simTitle.innerText = 'ASROCK UEFI UTILITY';
+    tabsList = ["Main", "OC Tweaker", "Advanced", "Tool", "H/W Monitor", "Security", "Boot"];
+    activeTabName = "OC Tweaker";
+    advancedKeyLabel.innerText = 'F6';
+  } else if (isAmiOem || isLegacy) {
+    simBox.className = 'bios-screen-sim animate-in theme-legacy';
+    simTitle.innerText = 'Aptio Setup Utility - American Megatrends, Inc.';
+    tabsList = ["Main", "Advanced", "Chipset", "Boot", "Security", "Save & Exit"];
+    activeTabName = "Advanced";
+    beginnerBox.style.display = 'none';
+  }
+
+  simTabs.innerHTML = tabsList.map(t => `<span class="sim-tab ${t === activeTabName ? 'active' : ''}">${t}</span>`).join('');
+
+  // Запасные горячие клавиши
   const hotkeyContainer = document.getElementById('hotkeys-container');
-  if (vendor.includes('asus')) {
+  if (isLaptop) {
+    if (vendor.includes('lenovo')) {
+      hotkeyContainer.innerHTML = '<span class="hotkey-tag">Fn+F2</span><span class="hotkey-tag">F2</span><span class="hotkey-tag">Novo Button (Скрепка)</span>';
+    } else if (vendor.includes('asus')) {
+      hotkeyContainer.innerHTML = '<span class="hotkey-tag">Fn+F2</span><span class="hotkey-tag">F2</span><span class="hotkey-tag">Esc</span>';
+    } else if (vendor.includes('hp')) {
+      hotkeyContainer.innerHTML = '<span class="hotkey-tag">F10</span><span class="hotkey-tag">Esc</span>';
+    } else {
+      hotkeyContainer.innerHTML = '<span class="hotkey-tag">Fn+F2</span><span class="hotkey-tag">F2</span><span class="hotkey-tag">Del</span>';
+    }
+  } else if (vendor.includes('asus') || vendor.includes('asrock')) {
     hotkeyContainer.innerHTML = '<span class="hotkey-tag">DEL</span><span class="hotkey-tag">F2</span>';
   } else if (vendor.includes('msi')) {
     hotkeyContainer.innerHTML = '<span class="hotkey-tag">DEL</span>';
-  } else if (vendor.includes('asrock')) {
-    hotkeyContainer.innerHTML = '<span class="hotkey-tag">DEL</span><span class="hotkey-tag">F2</span>';
-  } else if (isLaptop) {
-    hotkeyContainer.innerHTML = '<span class="hotkey-tag">F2</span><span class="hotkey-tag">Fn+F2</span><span class="hotkey-tag">Novo Button</span>';
   }
 
-  // Генерация динамических статусных баннеров
+  // Динамические баннеры состояний
   const bannerContainer = document.getElementById('status-banner-container');
   let bannerHtml = '';
 
@@ -670,9 +772,7 @@
         <span class="banner-icon">🟢</span>
         <div>
           <div class="banner-title">СИСТЕМА ПОЛНОСТЬЮ ГОТОВА К FACEIT AC</div>
-          <div class="banner-text">
-            Все необходимые модули безопасности (TPM 2.0, Secure Boot, виртуализация) активны. Дополнительных настроек не требуется, можно запускать игру!
-          </div>
+          <div class="banner-text">Все необходимые модули безопасности активны. Вход в BIOS для античита не требуется!</div>
         </div>
       </div>
     `;
@@ -681,9 +781,9 @@
       <div class="status-banner banner-legacy">
         <span class="banner-icon">🔴</span>
         <div>
-          <div class="banner-title">FACEIT AC АППАРАТНО НЕ ПОДДЕРЖИВАЕТСЯ</div>
+          <div class="banner-title">УСТАРЕВШАЯ ПЛАТФОРМА (LEGACY / DDR3)</div>
           <div class="banner-text">
-            Ваша материнская плата и процессор физически не содержат криптомодуль TPM 2.0 (платформы LGA775, 1155, AM3, X79/X99). Включение в BIOS невозможно. Для игры требуется апгрейд на современную платформу (например, AMD AM4 или Intel LGA1200).
+            ${isLaptop ? 'Ноутбук' : 'Материнская плата'} физически не содержит криптомодуль TPM 2.0 (LGA775, 1155, AM3, старые ноутбуки до 2017 года). Вход в BIOS не поможет запустить FACEIT AC. Не отключайте CSM во избежание потери загрузки Windows!
           </div>
         </div>
       </div>
@@ -696,28 +796,10 @@
         <span class="banner-icon">🟡</span>
         <div style="width: 100%;">
           <div class="banner-title">ОШИБКА WINDOWS: ВКЛЮЧЕН TEST MODE</div>
-          <div class="banner-text">
-            FACEIT AC блокирует запуск из-за тестового режима. Вход в BIOS не требуется! Выполните команду в PowerShell от администратора:
-          </div>
+          <div class="banner-text">Античит блокирует запуск из-за тестового режима. Вход в BIOS не требуется! Выполните в PowerShell от админа:</div>
           <div class="cmd-box">
             <span>bcdedit /set testsigning off</span>
             <button class="copy-btn" onclick="copyText('bcdedit /set testsigning off', this)">Копировать</button>
-          </div>
-        </div>
-      </div>
-    `;
-  } else if (errorCode === 'debug') {
-    bannerHtml += `
-      <div class="status-banner banner-win-error">
-        <span class="banner-icon">🟡</span>
-        <div style="width: 100%;">
-          <div class="banner-title">ОШИБКА: KERNEL DEBUGGING MUST BE DISABLED</div>
-          <div class="banner-text">
-            Античит обнаружил отладку ядра. Отключите её командой и перезагрузите ПК:
-          </div>
-          <div class="cmd-box">
-            <span>bcdedit /debug off</span>
-            <button class="copy-btn" onclick="copyText('bcdedit /debug off', this)">Копировать</button>
           </div>
         </div>
       </div>
@@ -730,9 +812,7 @@
         <span class="banner-icon">⚠️</span>
         <div>
           <div class="banner-title">ВНИМАНИЕ: ДИСК ЗАШИФРОВАН BITLOCKER!</div>
-          <div class="banner-text">
-            Перед включением TPM или сбросом BIOS <b>обязательно сохраните 48-значный ключ восстановления BitLocker</b> на смартфон. Иначе Windows заблокирует вход!
-          </div>
+          <div class="banner-text">${isLaptop ? 'На вашем ноутбуке активно фабричное шифрование диска.' : 'Диск зашифрован BitLocker.'} Перед любыми изменениями TPM обязательно сохраните 48-значный ключ восстановления на телефон из аккаунта Microsoft (aka.ms/myrecoverykey)!</div>
         </div>
       </div>
     `;
@@ -744,63 +824,59 @@
         <span class="banner-icon">🚫</span>
         <div>
           <div class="banner-title">ОПАСНОСТЬ ЧЕРНОГО ЭКРАНА: СТАРАЯ ВИДЕОКАРТА</div>
-          <div class="banner-text">
-            Видеокарта не поддерживает чистый UEFI GOP. Отключение CSM Support приведет к <b>полному отсутствию изображения</b>. Не отключайте CSM!
-          </div>
+          <div class="banner-text">Видеокарта не поддерживает чистый UEFI GOP. Отключение CSM Support приведет к отсутствию изображения!</div>
         </div>
       </div>
     `;
   }
   bannerContainer.innerHTML = bannerHtml;
 
-  // Пути для 4 ключевых шагов безопасности
-  let tpmCrumbs = cpu === 'intel' ? ["Security", "Intel Platform Trust (PTT): [Enabled]"] : ["Security", "AMD CPU fTPM Switch: [Enabled]"];
-  let vtxCrumbs = cpu === 'intel' ? ["Advanced", "CPU Configuration", "Intel Virtualization Tech: [Enabled]"] : ["Advanced", "CPU Configuration", "SVM Mode: [Enabled]"];
-  let ramCrumbs = cpu === 'amd' ? ["OC Tweaker", "EXPO / DOCP: [Profile 1]"] : ["OC Tweaker", "Extreme Memory Profile: [Profile 1]"];
-  let rebarCrumbs = ["PCI Settings", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
-  let cstatesCrumbs = ["CPU Power Mgmt", "C-States: [Disabled]"];
-  let spreadCrumbs = ["Clock Tweaker", "Spread Spectrum: [Disabled]"];
+  // Пути шагов
+  let tpmCrumbs = cpu === 'intel' ? ["Security", "Intel Platform Trust (PTT)"] : ["Security", "AMD CPU fTPM Switch"];
+  let vtxCrumbs = cpu === 'intel' ? ["Advanced", "CPU Configuration", "Intel Virtualization Tech"] : ["Advanced", "CPU Configuration", "SVM Mode"];
+  let ramCrumbs = cpu === 'amd' ? ["OC Tweaker", "EXPO / DOCP"] : ["OC Tweaker", "Extreme Memory Profile"];
+  let rebarCrumbs = ["PCI Settings", "Above 4G Decoding / Re-Size BAR"];
+  let cstatesCrumbs = ["CPU Power Mgmt", "C-States"];
+  let spreadCrumbs = ["Clock Tweaker", "Spread Spectrum"];
 
-  if (vendor.includes('gigabyte')) {
-    tpmCrumbs = cpu === 'intel' ? ["Settings", "Miscellaneous", "Intel PTT: [Enabled]"] : ["Settings", "Miscellaneous", "AMD CPU fTPM: [Enabled]"];
-    vtxCrumbs = cpu === 'intel' ? ["Tweaker", "Advanced CPU Settings", "VT-x / Intel Virtualization: [Enabled]"] : ["Tweaker", "Advanced CPU Settings", "SVM Mode: [Enabled]"];
-    ramCrumbs = (cpu === 'intel' && ramType === 'DDR4') ? ["Tweaker", "Extreme Memory Profile: [Profile 1]", "Gear Mode: [Gear 1]"] : ["Tweaker", "Extreme Memory Profile: [Profile 1]"];
-    rebarCrumbs = ["Settings", "IO Ports", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
-    cstatesCrumbs = ["Tweaker", "Advanced CPU Settings", "C-States: [Disabled]"];
-    spreadCrumbs = ["Tweaker", "Spread Spectrum: [Disabled]"];
+  if (isLaptop) {
+    tpmCrumbs = ["Security", cpu === 'intel' ? "Intel PTT / TPM Device: [Enabled]" : "AMD fTPM: [Enabled]"];
+    vtxCrumbs = ["Configuration / Advanced", cpu === 'intel' ? "Intel Virtual Technology: [Enabled]" : "SVM Support: [Enabled]"];
+  } else if (vendor.includes('gigabyte')) {
+    tpmCrumbs = cpu === 'intel' ? ["Settings", "Miscellaneous", "Intel PTT"] : ["Settings", "Miscellaneous", "AMD CPU fTPM"];
+    vtxCrumbs = cpu === 'intel' ? ["Tweaker", "Advanced CPU Settings", "VT-x / Intel Virtualization"] : ["Tweaker", "Advanced CPU Settings", "SVM Mode"];
+    ramCrumbs = ["Tweaker", "Extreme Memory Profile (XMP)"];
+    rebarCrumbs = ["Settings", "IO Ports", "Above 4G / Re-Size BAR"];
+    cstatesCrumbs = ["Tweaker", "Advanced CPU Settings", "C-States"];
+    spreadCrumbs = ["Tweaker", "Spread Spectrum"];
   } else if (vendor.includes('asus')) {
-    tpmCrumbs = cpu === 'intel' ? ["Advanced", "PCH-FW Configuration", "PTT: [Enable]"] : ["Advanced", "AMD fTPM configuration", "Firmware TPM: [Enable]"];
-    vtxCrumbs = cpu === 'intel' ? ["Advanced", "CPU Configuration", "Intel (VMX) Virtualization: [Enabled]"] : ["Advanced", "CPU Configuration", "SVM Mode: [Enabled]"];
-    ramCrumbs = ["Ai Tweaker", "Ai Overclock Tuner", cpu === 'amd' ? "EXPO I / DOCP" : "XMP I"];
-    rebarCrumbs = ["Advanced", "PCI Subsystem", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
-    cstatesCrumbs = ["Ai Tweaker", "CPU Power Mgmt", "C-states: [Disabled]"];
-    spreadCrumbs = ["Ai Tweaker", "BCLK Spread Spectrum: [Disabled]"];
+    tpmCrumbs = cpu === 'intel' ? ["Advanced", "PCH-FW Configuration", "PTT"] : ["Advanced", "AMD fTPM configuration", "Firmware TPM"];
+    vtxCrumbs = cpu === 'intel' ? ["Advanced", "CPU Configuration", "Intel (VMX) Virtualization"] : ["Advanced", "CPU Configuration", "SVM Mode"];
+    ramCrumbs = ["Ai Tweaker", "Ai Overclock Tuner"];
+    rebarCrumbs = ["Advanced", "PCI Subsystem", "Above 4G / Re-Size BAR"];
+    cstatesCrumbs = ["Ai Tweaker", "CPU Power Mgmt", "C-states"];
+    spreadCrumbs = ["Ai Tweaker", "BCLK Spread Spectrum"];
   } else if (vendor.includes('msi')) {
-    tpmCrumbs = cpu === 'intel' ? ["Security", "Trusted Computing", "Security Device: [Enable]"] : ["Security", "Trusted Computing", "AMD fTPM: [Enabled]"];
-    vtxCrumbs = cpu === 'intel' ? ["OC Menu", "CPU Features", "Intel Virtualization Tech: [Enabled]"] : ["OC Menu", "CPU Features", "SVM Mode: [Enabled]"];
-    ramCrumbs = ["OC Menu", "DRAM Setting", cpu === 'amd' ? "EXPO: [Profile 1]" : "A-XMP: [Profile 1]"];
-    rebarCrumbs = ["Settings", "PCIe Subsystem", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
-    cstatesCrumbs = ["OC Menu", "Advanced CPU Config", "Intel C-State: [Disabled]"];
+    tpmCrumbs = cpu === 'intel' ? ["Security", "Trusted Computing", "Security Device"] : ["Security", "Trusted Computing", "AMD fTPM"];
+    vtxCrumbs = cpu === 'intel' ? ["OC Menu", "CPU Features", "Intel Virtualization Tech"] : ["OC Menu", "CPU Features", "SVM Mode"];
+    ramCrumbs = ["OC Menu", "DRAM Setting", "A-XMP / EXPO"];
+    rebarCrumbs = ["Settings", "PCIe Subsystem", "Above 4G / Re-Size BAR"];
+    cstatesCrumbs = ["OC Menu", "Advanced CPU Config", "Intel C-State"];
   } else if (vendor.includes('asrock')) {
-    tpmCrumbs = cpu === 'intel' ? ["Security", "Intel Platform Trust: [Enabled]"] : ["Advanced", "CPU Config", "AMD fTPM Switch: [Enabled]"];
-    vtxCrumbs = cpu === 'intel' ? ["Advanced", "CPU Configuration", "Intel Virtualization: [Enabled]"] : ["Advanced", "CPU Configuration", "SVM Mode: [Enabled]"];
-    ramCrumbs = ["OC Tweaker", "DRAM Config", cpu === 'amd' ? "Load EXPO Setting" : "Load XMP Setting: [Profile 1]"];
-    rebarCrumbs = ["Advanced", "PCI Configuration", "Above 4G: [Enabled]", "Re-Size BAR: [Auto]"];
-    cstatesCrumbs = ["Advanced", "CPU Configuration", "CPU C States: [Disabled]"];
-  } else if (isAmiOem) {
-    tpmCrumbs = ["Advanced", "Trusted Computing", "Security Device Support: [Enabled]"];
-    vtxCrumbs = ["Advanced", "CPU Configuration", "Intel Virtualization / SVM: [Enabled]"];
-    ramCrumbs = ["Advanced", "Memory Configuration", "Memory Frequency / Profile"];
-    rebarCrumbs = ["Advanced", "PCI Subsystem", "Above 4G: [Enabled]"];
+    tpmCrumbs = cpu === 'intel' ? ["Security", "Intel Platform Trust"] : ["Advanced", "CPU Config", "AMD fTPM Switch"];
+    vtxCrumbs = cpu === 'intel' ? ["Advanced", "CPU Configuration", "Intel Virtualization"] : ["Advanced", "CPU Configuration", "SVM Mode"];
+    ramCrumbs = ["OC Tweaker", "DRAM Config", "Load XMP / EXPO Setting"];
+    rebarCrumbs = ["Advanced", "PCI Configuration", "Above 4G / Re-Size BAR"];
+    cstatesCrumbs = ["Advanced", "CPU Configuration", "CPU C States"];
   }
 
-  // --- ВКЛАДКА 1: АНТИЧИТЫ И БЕЗОПАСНОСТЬ ---
+  // Вкладка 1: Античиты
   const isCsmBlocked = disk === 'mbr' || !hasUefiGop;
   let secureBootWarning = null;
   if (disk === 'mbr') {
-    secureBootWarning = "На вашей системе разметка накопителя MBR. Включение Secure Boot приведет к невозможности запуска Windows! Сначала конвертируйте диск в GPT через утилиту mbr2gpt.";
+    secureBootWarning = "На вашей системе разметка накопителя MBR. Включение Secure Boot приведет к невозможности старта Windows! Сначала конвертируйте диск в GPT утилитой mbr2gpt.";
   } else if (!hasUefiGop) {
-    secureBootWarning = "Видеокарта не поддерживает чистый UEFI. Не отключайте CSM Support во избежание черного экрана!";
+    secureBootWarning = "Видеокарта не поддерживает чистый UEFI. Не отключайте CSM во избежание черного экрана!";
   }
 
   const securitySteps = [
@@ -809,7 +885,8 @@
       badge: isLegacy ? "Не поддерживается" : (isTpmOn ? "Включено" : "Требуется включить"),
       badgeClass: isLegacy ? "badge-locked" : (isTpmOn ? "badge-green" : "badge-orange"),
       crumbs: tpmCrumbs,
-      desc: isTpmOn ? "Криптомодуль TPM 2.0 уже активен. Античиты имеют к нему прямой доступ." : "Обязательно для FACEIT Anti-Cheat и Riot Vanguard.",
+      action: "Установить значение: [Enabled] / [Включено]",
+      desc: isTpmOn ? "Криптомодуль TPM 2.0 активен. Античиты имеют к нему прямой доступ." : "Аппаратный криптомодуль, защищающий ключи шифрования античита.",
       supported: !isLegacy,
       alreadyActive: isTpmOn
     },
@@ -817,8 +894,9 @@
       title: "2. Безопасная загрузка (Secure Boot)",
       badge: isCsmBlocked ? "Заблокировано" : (isSbOn ? "Включено" : "Требуется включить"),
       badgeClass: isCsmBlocked ? "badge-locked" : (isSbOn ? "badge-green" : "badge-orange"),
-      crumbs: ["Boot", "Secure Boot", "Mode: [Standard]", "OS Type: [Windows UEFI]"],
-      desc: isSbOn ? "Secure Boot активен. Ядро Windows аппаратно защищено от руткитов." : "Требует обязательного отключения CSM Support [Disabled].",
+      crumbs: isLaptop ? ["Security / Boot", "Secure Boot"] : ["Boot", "Secure Boot", "OS Type"],
+      action: isLaptop ? "Выставить Secure Boot: [Enabled]" : "Выставить [Windows UEFI Mode] и отключить CSM Support [Disabled]",
+      desc: isSbOn ? "Secure Boot активен. Ядро Windows аппаратно защищено от руткитов." : "Блокирует запуск сторонних драйверов читов до загрузки Windows.",
       supported: !isCsmBlocked,
       alreadyActive: isSbOn,
       warning: secureBootWarning
@@ -828,7 +906,8 @@
       badge: isVtxOn ? "Включено" : "Обязательно",
       badgeClass: isVtxOn ? "badge-green" : "badge-orange",
       crumbs: vtxCrumbs,
-      desc: isVtxOn ? "Виртуализация процессора активна. Изоляция ядра Windows работает." : "Необходима античиту для изоляции страниц памяти (VBS / Core Isolation).",
+      action: "Установить значение: [Enabled] / [Включено]",
+      desc: isVtxOn ? "Виртуализация активна. Изоляция памяти ядра работает." : "Необходима античиту для изоляции страниц памяти (VBS / Core Isolation).",
       supported: true,
       alreadyActive: isVtxOn
     },
@@ -836,15 +915,16 @@
       title: "4. Сброс ключей Secure Boot (При ошибке)",
       badge: "Решение проблем",
       badgeClass: "badge-orange",
-      crumbs: ["Boot", "Secure Boot", "Key Management", "Restore Factory Keys: [Execute]"],
-      desc: "Используйте, если статус Secure Boot висит в 'Setup Mode' или античит пишет 'Platform Key not enrolled'.",
+      crumbs: isLaptop ? ["Security", "Restore Factory Keys"] : ["Boot", "Secure Boot", "Key Management"],
+      action: "Нажать: [Restore Factory Keys] ➔ [Yes]",
+      desc: "Используйте, только если античит пишет 'Setup Mode' или 'Platform Key not enrolled'.",
       supported: true,
       alreadyActive: false
     }
   ];
 
-  // --- ВКЛАДКА 2: ПРОИЗВОДИТЕЛЬНОСТЬ И FPS ---
-  const isXmpSupported = hasXmp && !isIntelHSeriesLocked && !isLaptop;
+  // Вкладка 2: Производительность
+  const isXmpSupported = hasXmp && !isIntelHSeriesLocked && !isLaptop && !isLegacy;
   let xmpWarning = null;
   let xmpBadge = isXmpOn ? "XMP Активен" : "Требуется включить";
   let xmpBadgeClass = isXmpOn ? "badge-green" : "badge-orange";
@@ -852,30 +932,54 @@
   if (isLaptop) {
     xmpBadge = "Заблокировано в OEM";
     xmpBadgeClass = "badge-locked";
-    xmpWarning = "В прошивках ноутбуков оверклокинг ОЗУ заблокирован производителем.";
+    xmpWarning = "В прошивках ноутбуков оверклокинг ОЗУ аппаратно скрыт производителем для защиты от перегрева.";
+  } else if (isLegacy) {
+    xmpBadge = "Legacy (DDR3 / Ручной)";
+    xmpBadgeClass = "badge-locked";
+    xmpWarning = "На устаревших платформах оверклокинг ОЗУ производится ручным выбором Memory Frequency.";
   } else if (!hasXmp) {
     xmpBadge = "JEDEC (Без XMP)";
     xmpBadgeClass = "badge-locked";
-    xmpWarning = "Установленная память работает по стандартному профилю JEDEC. Планки уже работают на штатной частоте.";
+    xmpWarning = "Планки работают по стандартному профилю JEDEC без заводского разгона.";
   } else if (isIntelHSeriesLocked) {
-    xmpBadge = "Ограничено Intel H-чипсетом";
+    xmpBadge = "Ограничено чипсетом H-серии";
     xmpBadgeClass = "badge-locked";
-    xmpWarning = "На бюджетных чипсетах Intel H-серии разгон памяти заблокирован на уровне Intel ME. Модули работают на пределе возможностей контроллера CPU.";
-  } else if (ramGb < 16) {
-    xmpWarning = "Обнаружено менее 16 ГБ ОЗУ (" + ramGb + " ГБ). На некоторых модулях XMP может работать нестабильно.";
-  } else if (channels === 'single') {
-    xmpWarning = "Память работает в одноканальном режиме (Single Channel). Для максимальной производительности рекомендуется второй модуль.";
+    xmpWarning = "На чипсетах Intel H-серии разгон памяти заблокирован на уровне Intel ME.";
   }
 
-  const isRebarBlocked = isCsmBlocked || isLaptop;
+  const isRebarBlocked = isCsmBlocked || isLaptop || isLegacy || !hasGpuRebar;
+  let rebarWarning = null;
+  if (isLaptop) {
+    rebarWarning = "На ноутбуках функция ReBAR управляется видеодрайвером автоматически и скрыта из BIOS.";
+  } else if (!hasGpuRebar) {
+    rebarWarning = "Ваша видеокарта архитектурно не поддерживает Resizable BAR (поддержка начинается с NVIDIA RTX 3000 и AMD RX 6000).";
+  } else if (isLegacy) {
+    rebarWarning = "Технология Resizable BAR аппаратно отсутствует на старых материнских платах.";
+  } else if (isCsmBlocked) {
+    rebarWarning = "ReBAR требует чистый UEFI и разметку GPT при отключенном CSM.";
+  }
 
-  const perfSteps = [
+  // Специфичный для ноутбуков шаг: MUX Switch
+  const muxStep = {
+    title: "1. MUX Switch (Прямое подключение dGPU)",
+    badge: isMuxOn ? "Активно (dGPU Only)" : "Киберспорт / Отклик",
+    badgeClass: isMuxOn ? "badge-green" : "badge-orange",
+    crumbs: ["Configuration / Display", "Graphic Device / Display Mode"],
+    action: "Выставить: [Discrete Only] / [dGPU]",
+    desc: isMuxOn ? "Монитор ноутбука подключен напрямую к видеокарте. Инпут-лаг минимален." : "Отключает встроенное видеоядро процессора и передает сигнал с видеокарты напрямую на экран. Снижает задержку на 15 мс и повышает средний FPS на 20%.",
+    supported: isGamingLaptop,
+    alreadyActive: isMuxOn,
+    warning: isGamingLaptop ? "В режиме dGPU Only автономность от батареи снижается в 2 раза. Играйте от сети." : "На офисных ноутбуках со встроенной графикой функция MUX Switch отсутствует."
+  };
+
+  const desktopPerfSteps = [
     {
       title: "1. Профиль разгона памяти (XMP / EXPO)",
       badge: xmpBadge,
       badgeClass: xmpBadgeClass,
-      crumbs: isXmpSupported ? ramCrumbs : ["Tweaker", "JEDEC Standard (Штатный режим)"],
-      desc: isXmpOn ? "Память уже работает на повышенной частоте разгона." : (isXmpSupported ? "Активация паспортной частоты и заниженных таймингов оперативной памяти." : "Память функционирует на штатной базовой частоте. Пропустите этот шаг."),
+      crumbs: isXmpSupported ? ramCrumbs : ["Tweaker", "JEDEC / Standard Frequency"],
+      action: isXmpSupported ? "Выбрать: [Profile 1]" : "Пропустить этот шаг",
+      desc: isXmpOn ? "Память уже работает на повышенной частоте разгона." : (isXmpSupported ? "Активирует паспортную скорость и снижает тайминги памяти, убирая микрофризы." : "Память функционирует на штатной базовой частоте."),
       supported: isXmpSupported,
       alreadyActive: isXmpOn,
       warning: xmpWarning
@@ -885,17 +989,19 @@
       badge: isRebarBlocked ? "Не поддерживается" : (isRebarOn ? "Включено" : "Требуется включить"),
       badgeClass: isRebarBlocked ? "badge-locked" : (isRebarOn ? "badge-green" : "badge-orange"),
       crumbs: rebarCrumbs,
-      desc: isRebarOn ? "Resizable BAR уже активен и используется видеодрайвером." : "Позволяет процессору адресовать всю видеопамять видеокарты сразу, устраняя микрофризы.",
+      action: "Выставить Above 4G: [Enabled], Re-Size BAR: [Auto]",
+      desc: isRebarOn ? "Resizable BAR уже активен и используется видеодрайвером." : "Позволяет процессору адресовать всю видеопамять видеокарты за один такт, повышая редкие кадры (1% Low FPS).",
       supported: !isRebarBlocked,
       alreadyActive: isRebarOn,
-      warning: isCsmBlocked ? "ReBAR требует чистый UEFI и разметку GPT при отключенном CSM." : (isLaptop ? "На ноутбуках функция управляется видеодрайвером и скрыта из BIOS." : null)
+      warning: rebarWarning
     },
     {
       title: "3. Задержки отклика (C-States Control)",
       badge: isLaptop ? "Заблокировано" : "Инпут-лаг",
       badgeClass: isLaptop ? "badge-locked" : "badge-red",
       crumbs: cstatesCrumbs,
-      desc: "Запрещает ядрам процессора уходить в глубокий сон, устраняя задержку первого клика мыши.",
+      action: "Установить значение: [Disabled] / [Отключено]",
+      desc: "Запрещает ядрам процессора «засыпать», обеспечивая моментальный отклик на первый клик мыши.",
       supported: !isLaptop,
       alreadyActive: false,
       warning: isLaptop ? "На ноутбуках отключение C-States заблокировано во избежание перегрева батареи." : "Внимание: отключение C-States повышает температуру процессора в простое на 5–10°C."
@@ -905,12 +1011,15 @@
       badge: isLaptop ? "Заблокировано" : "Стабильность",
       badgeClass: isLaptop ? "badge-locked" : "badge-orange",
       crumbs: spreadCrumbs,
-      desc: "Удерживает шину BCLK строго на 100.00 MHz, устраняя микроколебания частоты CPU/RAM. Настройка 100% безопасна для железа.",
+      action: "Установить значение: [Disabled] / [Отключено]",
+      desc: "Удерживает шину BCLK строго на 100.00 MHz, устраняя микроколебания частоты CPU/RAM. Настройка 100% безопасна.",
       supported: !isLaptop,
       alreadyActive: false,
-      warning: isLaptop ? "Функция недоступна в OEM-прошивках ноутбуков." : null
+      warning: isLaptop ? "Функция недоступна в прошивках ноутбуков." : null
     }
   ];
+
+  const perfSteps = isGamingLaptop ? [muxStep, ...desktopPerfSteps.slice(1)] : desktopPerfSteps;
 
   function renderList(containerId, list, prefix) {
     const container = document.getElementById(containerId);
@@ -952,6 +1061,10 @@
           </div>
         </div>
         <div class="path-container">${pathHtml}</div>
+        <div class="action-instruction-box">
+          <span class="action-label">Действие:</span>
+          <span class="action-target">${step.action}</span>
+        </div>
         <p class="step-desc">${step.desc}</p>
         ${alertHtml}
       `;
@@ -968,36 +1081,14 @@
     else card.classList.remove('done');
   }
 
-  // --- БАЗА ЧАСТЫХ ОШИБОК FACEIT AC ---
+  // Каталог ошибок FACEIT AC
   const faceitErrors = [
-    {
-      q: "You must disable Test Mode",
-      desc: "В Windows включен режим неподписанных тестовых драйверов. Отключите его командой:",
-      cmd: "bcdedit /set testsigning off"
-    },
-    {
-      q: "Kernel debugging must be disabled",
-      desc: "Включена отладка ядра Windows. Античит блокирует запуск при активном отладчике:",
-      cmd: "bcdedit /debug off"
-    },
-    {
-      q: "Driver signature enforcement must be enabled",
-      desc: "Отключена обязательная проверка цифровых подписей драйверов (DSE):",
-      cmd: "bcdedit /set nointegritychecks off"
-    },
-    {
-      q: "Data Execution Prevention (DEP) must be enabled",
-      desc: "Отключена аппаратная защита памяти DEP. Включите стандартную политику:",
-      cmd: "bcdedit /set nx OptIn"
-    },
-    {
-      q: "The driver \\??\\C:\\... is blocked from loading",
-      desc: "Античит заблокировал уязвимый сторонний драйвер (старый софт подсветки, Gigabyte App Center, старые утилиты разгона). Удалите конфликтующее ПО или обновите его до последней версии."
-    },
-    {
-      q: "Your system is missing important Windows security updates",
-      desc: "Ваша сборка Windows устарела (ниже билда 19045) либо отключена служба обновлений. Откройте Центр обновления Windows и установите накопительные обновления KB."
-    }
+    { q: "You must disable Test Mode", desc: "В Windows включен режим неподписанных тестовых драйверов. Отключите его командой:", cmd: "bcdedit /set testsigning off" },
+    { q: "Kernel debugging must be disabled", desc: "Включена отладка ядра Windows. Античит блокирует запуск при активном отладчике:", cmd: "bcdedit /debug off" },
+    { q: "Driver signature enforcement must be enabled", desc: "Отключена обязательная проверка цифровых подписей драйверов (DSE):", cmd: "bcdedit /set nointegritychecks off" },
+    { q: "Data Execution Prevention (DEP) must be enabled", desc: "Отключена аппаратная защита памяти DEP. Включите стандартную политику:", cmd: "bcdedit /set nx OptIn" },
+    { q: "The driver \\??\\C:\\... is blocked from loading", desc: "Античит заблокировал уязвимый сторонний драйвер (старый софт подсветки, Gigabyte App Center, старые утилиты разгона). Удалите или обновите конфликтующее ПО." },
+    { q: "Your system is missing important Windows security updates", desc: "Сборка Windows устарела (ниже билда 19045) либо отключена служба обновлений. Установите накопительные обновления KB." }
   ];
 
   function renderCatalog(list) {
@@ -1006,17 +1097,7 @@
     list.forEach((item, i) => {
       const itemEl = document.createElement('div');
       itemEl.className = 'catalog-item';
-      
-      let cmdHtml = '';
-      if (item.cmd) {
-        cmdHtml = `
-          <div class="cmd-box" style="margin-top: 6px;">
-            <span>${item.cmd}</span>
-            <button class="copy-btn" onclick="copyText('${item.cmd}', this)">Копировать</button>
-          </div>
-        `;
-      }
-
+      let cmdHtml = item.cmd ? `<div class="cmd-box" style="margin-top: 6px;"><span>${item.cmd}</span><button class="copy-btn" onclick="copyText('${item.cmd}', this)">Копировать</button></div>` : '';
       itemEl.innerHTML = `
         <div class="catalog-title" onclick="toggleCatalogItem(${i})">
           <span>❌ ${item.q}</span>
@@ -1034,13 +1115,8 @@
   function toggleCatalogItem(idx) {
     const body = document.getElementById('cat-body-' + idx);
     const arrow = document.getElementById('cat-arrow-' + idx);
-    if (body.style.display === 'block') {
-      body.style.display = 'none';
-      arrow.innerText = '▼';
-    } else {
-      body.style.display = 'block';
-      arrow.innerText = '▲';
-    }
+    if (body.style.display === 'block') { body.style.display = 'none'; arrow.innerText = '▼'; }
+    else { body.style.display = 'block'; arrow.innerText = '▲'; }
   }
 
   function filterCatalog() {
