@@ -18,18 +18,39 @@
       --text: #F3F4F6;
       --text-muted: #8B949E;
       --disabled-bg: rgba(255, 255, 255, 0.02);
-      --disabled-text: #4B5563;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
     body {
       background-color: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      padding: 16px 12px 36px;
+      padding: 16px 12px 40px;
       display: flex;
       justify-content: center;
+      overflow-x: hidden;
     }
     .wrapper { width: 100%; max-width: 500px; }
+
+    /* Анимации */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+      70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Шапка */
     .header {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -39,41 +60,74 @@
     }
     .brand-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .brand { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: var(--accent); text-transform: uppercase; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: inline-block; margin-right: 4px; }
-    .status-text { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; }
+    .status-badge {
+      display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted);
+      background: rgba(16, 185, 129, 0.08); padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+      animation: pulseGlow 2s infinite;
+    }
     .title { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
     .pills { display: flex; flex-wrap: wrap; gap: 6px; }
     .pill {
       background: var(--card-inner);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 4px 8px;
+      padding: 5px 9px;
       font-size: 11px;
       font-weight: 600;
       color: #D1D5DB;
     }
     .pill b { color: #fff; }
-    .hotkey-bar {
-      background: #12151D;
+
+    /* Горячие клавиши и кнопка Плана Б */
+    .action-bar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .hotkey-box {
+      background: #11141C;
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 10px 14px;
-      margin-bottom: 12px;
+      padding: 10px 12px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
     }
     .hotkey-label { font-size: 12px; color: var(--text-muted); }
-    .hotkey-tags { display: flex; gap: 6px; }
+    .hotkey-tags { display: flex; gap: 4px; }
     .hotkey-tag {
       background: #1C2230;
       border: 1px solid #2B3448;
-      border-radius: 6px;
-      padding: 3px 8px;
+      border-radius: 5px;
+      padding: 3px 7px;
       font-size: 11px;
       font-weight: 700;
       color: #fff;
     }
+    .plan-b-btn {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #FCA5A5;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .plan-b-btn:active {
+      transform: scale(0.97);
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    /* Вкладки */
     .tab-switch {
       display: flex;
       gap: 6px;
@@ -93,49 +147,25 @@
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
       text-align: center;
     }
     .tab-btn.active {
       background: var(--card-bg);
       color: #fff;
       border: 1px solid var(--border-focus);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
     }
-    .accordion {
-      background: rgba(239, 68, 68, 0.05);
-      border: 1px solid rgba(239, 68, 68, 0.25);
-      border-radius: 8px;
-      margin-bottom: 14px;
-      overflow: hidden;
-    }
-    .accordion-header {
-      padding: 12px 14px;
-      font-size: 12px;
-      font-weight: 700;
-      color: #FCA5A5;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-    }
-    .accordion-body {
-      padding: 0 14px 12px;
-      font-size: 12px;
-      color: #D1D5DB;
-      line-height: 1.6;
-      border-top: 1px dashed rgba(239, 68, 68, 0.2);
-      padding-top: 10px;
-    }
-    .accordion-body ol { padding-left: 18px; }
-    .accordion-body li { margin-bottom: 4px; }
+
+    /* Карточки шагов */
     .step-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 14px;
       margin-bottom: 10px;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
+      opacity: 0;
     }
     .step-card.disabled {
       background: var(--disabled-bg);
@@ -143,8 +173,9 @@
       opacity: 0.65;
     }
     .step-card.done {
-      opacity: 0.55;
+      opacity: 0.5;
       border-color: rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.02);
     }
     .step-top {
       display: flex;
@@ -158,12 +189,14 @@
       height: 18px;
       accent-color: var(--green);
       cursor: pointer;
+      transition: transform 0.2s ease;
     }
+    .step-checkbox:active { transform: scale(1.2); }
     .step-title { font-size: 13px; font-weight: 700; color: #fff; }
     .badge {
       font-size: 10px;
       font-weight: 700;
-      padding: 2px 7px;
+      padding: 3px 7px;
       border-radius: 4px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -172,6 +205,7 @@
     .badge-orange { background: rgba(245, 158, 11, 0.15); color: var(--orange); border: 1px solid rgba(245, 158, 11, 0.3); }
     .badge-red { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.3); }
     .badge-locked { background: rgba(107, 114, 128, 0.2); color: #9CA3AF; border: 1px solid rgba(107, 114, 128, 0.3); }
+    
     .path-container {
       background: var(--card-inner);
       border: 1px solid var(--border);
@@ -181,7 +215,7 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
       font-size: 11px;
     }
@@ -224,15 +258,87 @@
       align-items: flex-start;
       margin-top: 6px;
     }
+
+    /* Модальное окно: План Б (Экстренный сброс) */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(14, 16, 21, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      z-index: 1000;
+      animation: fadeIn 0.25s ease;
+    }
+    .modal-box {
+      background: var(--card-bg);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 14px;
+      max-width: 440px;
+      width: 100%;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+      animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+    .modal-title { font-size: 15px; font-weight: 700; color: #FCA5A5; display: flex; align-items: center; gap: 8px; }
+    .close-btn {
+      background: #1C2230;
+      border: none;
+      color: var(--text-muted);
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .method-card {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+    .method-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .method-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+    .method-desc b { color: #E5E7EB; }
+
+    /* Векторная схема батарейки CR2032 */
+    .cmos-diagram {
+      background: #090B0F;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .diagram-caption { font-size: 11px; color: #9CA3AF; text-align: center; }
   </style>
 </head>
 <body>
 
 <div class="wrapper">
-  <div class="header">
+  <!-- Шапка со спецификацией -->
+  <div class="header animate-in" style="animation-delay: 0.05s;">
     <div class="brand-row">
       <span class="brand">Zempi Optimization</span>
-      <span class="status-text"><span class="status-dot"></span>Синхронизировано</span>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span>Конфигуратор активен</span>
+      </div>
     </div>
     <div class="title">Конфигуратор BIOS</div>
     <div class="pills">
@@ -243,49 +349,101 @@
     </div>
   </div>
 
-  <div class="hotkey-bar">
-    <span class="hotkey-label">Клавиши входа в BIOS:</span>
-    <div class="hotkey-tags">
-      <span class="hotkey-tag">DEL</span>
-      <span class="hotkey-tag">F2</span>
+  <!-- Панель быстрого действия: горячие клавиши + аккуратная кнопка План Б -->
+  <div class="action-bar animate-in" style="animation-delay: 0.1s;">
+    <div class="hotkey-box">
+      <span class="hotkey-label">Вход в BIOS:</span>
+      <div class="hotkey-tags">
+        <span class="hotkey-tag">DEL</span>
+        <span class="hotkey-tag">F2</span>
+      </div>
     </div>
+    <button class="plan-b-btn" onclick="openPlanB()">
+      <span>🛡️</span>
+      <span>План «Б» (Сброс)</span>
+    </button>
   </div>
 
-  <div class="accordion">
-    <div class="accordion-header" onclick="toggleBackup()">
-      <span>🛡️ План «Б» (Экстренный сброс настроек)</span>
-      <span id="acc-icon">▼</span>
-    </div>
-    <div class="accordion-body" id="acc-body" style="display: none;">
-      <ol>
-        <li><b>Перед изменениями:</b> найдите раздел Save Profiles и сохраните профиль 1.</li>
-        <li><b>Быстрый сброс:</b> нажмите <b>F9</b> (Load Defaults) и <b>F10</b> (Save & Exit).</li>
-        <li><b>Если нет картинки:</b> обесточьте ПК из розетки и замкните контакты Clear CMOS (CLRTC/JBAT1) на 10 сек.</li>
-      </ol>
-    </div>
-  </div>
-
-  <!-- Вкладки разделения профилей -->
-  <div class="tab-switch">
+  <!-- Вкладки профилей -->
+  <div class="tab-switch animate-in" style="animation-delay: 0.15s;">
     <button class="tab-btn active" id="tab-btn-sec" onclick="switchTab('security')">🛡️ Античиты (FACEIT / Riot)</button>
     <button class="tab-btn" id="tab-btn-perf" onclick="switchTab('perf')">⚡ Производительность & FPS</button>
   </div>
 
+  <!-- Контент вкладок -->
   <div id="tab-security-content"></div>
   <div id="tab-perf-content" style="display: none;"></div>
 </div>
 
+<!-- Модальное окно "План Б: Экстренный сброс настроек" -->
+<div class="modal-overlay" id="plan-b-modal" onclick="closePlanBOnBackdrop(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">
+        <span>🛡️</span>
+        <span>План «Б»: Сброс настроек BIOS</span>
+      </div>
+      <button class="close-btn" onclick="closePlanB()">✕</button>
+    </div>
+
+    <div class="method-card">
+      <div class="method-title">1. Мягкий сброс (Если ПК запускается)</div>
+      <div class="method-desc">
+        Перезагрузите ПК, нажимайте <b>DEL</b> или <b>F2</b> для входа в BIOS. Нажмите клавишу <b>F9</b> (Load Optimized Defaults), затем <b>F10</b> (Save & Exit).
+      </div>
+    </div>
+
+    <div class="method-card">
+      <div class="method-title">2. Замыкание джампера (CLRTC / JBAT1)</div>
+      <div class="method-desc">
+        Обесточьте ПК из розетки. Найдите на плате 2 контакта с подписью <b>CLR_CMOS</b> или <b>JBAT1</b> рядом с батарейкой и замкните их отверткой на <b>10 секунд</b>.
+      </div>
+    </div>
+
+    <div class="method-card" style="border-color: rgba(239, 68, 68, 0.3);">
+      <div class="method-title" style="color: #FCA5A5;">3. Аппаратный сброс (Черный экран / ПК не стартует)</div>
+      <div class="method-desc">
+        Если экран черный и клавиатура не реагирует:
+        <ol style="margin-top: 6px; padding-left: 18px; line-height: 1.5;">
+          <li><b>Выключите блок питания ПК</b> из розетки (кнопка 0 на БП).</li>
+          <li>Зажмите кнопку включения ПК на 5 сек (сброс остаточного тока).</li>
+          <li><b>Извлеките батарейку CR2032</b> из материнской платы на <b>5 минут</b>.</li>
+          <li>Вставьте батарейку обратно и включите ПК — BIOS сброшен на заводские.</li>
+        </ol>
+      </div>
+
+      <!-- Векторная наглядная схема извлечения батарейки -->
+      <div class="cmos-diagram">
+        <svg width="220" height="70" viewBox="0 0 220 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Плата фон -->
+          <rect x="5" y="5" width="210" height="60" rx="6" fill="#14171F" stroke="#252D3D" stroke-width="1"/>
+          <!-- Сокет батарейки -->
+          <circle cx="75" cy="35" r="24" fill="#0B0D12" stroke="#374151" stroke-width="2"/>
+          <!-- Батарейка CR2032 -->
+          <circle cx="75" cy="35" r="19" fill="#9CA3AF" stroke="#D1D5DB" stroke-width="1.5"/>
+          <text x="75" y="38" fill="#1F2937" font-size="7" font-family="sans-serif" font-weight="bold" text-anchor="middle">CR2032 3V</text>
+          <!-- Фиксатор / Защелка -->
+          <rect x="94" y="32" width="6" height="6" rx="1" fill="#EF4444"/>
+          <!-- Стрелка нажатия на фиксатор -->
+          <path d="M115 35L103 35M103 35L107 31M103 35L107 39" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round"/>
+          <text x="145" y="33" fill="#FCA5A5" font-size="9" font-family="sans-serif" font-weight="bold">Нажать защелку</text>
+          <text x="145" y="44" fill="#9CA3AF" font-size="8" font-family="sans-serif">Батарейка выйдет сама</text>
+        </svg>
+        <span class="diagram-caption">Аккуратно отожмите металлический язычок защелки вбок</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-  function toggleBackup() {
-    const body = document.getElementById('acc-body');
-    const icon = document.getElementById('acc-icon');
-    if (body.style.display === 'none') {
-      body.style.display = 'block';
-      icon.textContent = '▲';
-    } else {
-      body.style.display = 'none';
-      icon.textContent = '▼';
-    }
+  function openPlanB() {
+    document.getElementById('plan-b-modal').style.display = 'flex';
+  }
+  function closePlanB() {
+    document.getElementById('plan-b-modal').style.display = 'none';
+  }
+  function closePlanBOnBackdrop(e) {
+    if (e.target.id === 'plan-b-modal') closePlanB();
   }
 
   function switchTab(tab) {
@@ -315,13 +473,16 @@
   const channels = (urlParams.get('ch') || 'dual').toLowerCase();
   const disk = (urlParams.get('disk') || 'gpt').toLowerCase();
   const isLaptop = (urlParams.get('laptop') || '0') === '1';
+  const hasXmp = (urlParams.get('xmp') || '1') === '1';
+
+  // Детект лок-чипсетов (H410, H510, H610, A320, A520, A620)
+  const isBudgetChipset = vendor.includes('h610') || vendor.includes('h510') || vendor.includes('h410') || vendor.includes('a620') || vendor.includes('a520') || vendor.includes('a320');
 
   document.getElementById('pill-vendor').innerHTML = 'Плата: <b>' + vendor.toUpperCase() + '</b>';
   document.getElementById('pill-cpu').innerHTML = 'ЦПУ: <b>' + cpu.toUpperCase() + '</b>';
   document.getElementById('pill-ram').innerHTML = 'ОЗУ: <b>' + ramGb + ' ГБ ' + ramType + ' (' + (channels === 'single' ? 'Single ⚠️' : 'Dual') + ')</b>';
   document.getElementById('pill-disk').innerHTML = 'Диск: <b>' + disk.toUpperCase() + (disk === 'mbr' ? ' ❌' : '') + '</b>';
 
-  // Логика матрицы путей
   let tpmCrumbs = ["Settings", "Miscellaneous", "AMD CPU fTPM: [Enabled]"];
   let tpmDesc = "Обязательно для FACEIT Anti-Cheat и Riot Vanguard.";
   let ramCrumbs = ["Tweaker", "Extreme Memory Profile: [Profile 1]"];
@@ -353,7 +514,7 @@
     cstatesCrumbs = ["OC Menu", "Advanced CPU Config", "Intel C-State: [Disabled]"];
   }
 
-  // --- РАЗДЕЛ 1: АНТИЧИТЫ И БЕЗОПАСНОСТЬ ---
+  // РАЗДЕЛ 1: АНТИЧИТЫ И БЕЗОПАСНОСТЬ
   const securitySteps = [
     {
       title: "1. Модуль безопасности (TPM 2.0)",
@@ -382,20 +543,37 @@
     }
   ];
 
-  // --- РАЗДЕЛ 2: ПРОИЗВОДИТЕЛЬНОСТЬ И FPS ---
-  const isRamTooLow = ramGb < 16;
-  const isBudgetChipset = vendor.includes('h610') || vendor.includes('a620') || vendor.includes('h510') || vendor.includes('a520');
+  // РАЗДЕЛ 2: ПРОИЗВОДИТЕЛЬНОСТЬ И FPS
+  const isXmpSupported = hasXmp && !isBudgetChipset;
+  let xmpWarning = null;
+  let xmpBadge = "FPS & Latency";
+  let xmpBadgeClass = "badge-orange";
+
+  if (!hasXmp) {
+    xmpBadge = "JEDEC (Без XMP)";
+    xmpBadgeClass = "badge-locked";
+    xmpWarning = "Установленная оперативная память работает по стандартному профилю JEDEC без аппаратного разгона XMP/EXPO. В меню BIOS этот пункт будет отсутствовать — планки уже работают на штатной частоте.";
+  } else if (isBudgetChipset) {
+    xmpBadge = "Ограничено чипсетом";
+    xmpBadgeClass = "badge-locked";
+    xmpWarning = "Материнская плата на бюджетном чипсете (" + vendor.toUpperCase() + ") аппаратно блокирует разгон памяти выше базовой частоты контроллера процессора. Профиль XMP заблокирован в BIOS.";
+  } else if (ramGb < 16) {
+    xmpWarning = "Обнаружено менее 16 ГБ ОЗУ (" + ramGb + " ГБ). На некоторых модулях XMP может работать нестабильно.";
+  } else if (channels === 'single') {
+    xmpWarning = "Память работает в одноканальном режиме (Single Channel). Для раскрытия потенциала рекомендуется второй модуль.";
+  }
+
   const isRebarBlocked = disk === 'mbr' || isLaptop;
 
   const perfSteps = [
     {
       title: "1. Профиль разгона памяти (XMP / EXPO)",
-      badge: isRamTooLow ? "Не рекомендуется" : (isBudgetChipset ? "Ограничено" : "FPS & Latency"),
-      badgeClass: isRamTooLow || isBudgetChipset ? "badge-locked" : "badge-orange",
-      crumbs: ramCrumbs,
-      desc: ramDesc,
-      supported: !isBudgetChipset,
-      warning: isRamTooLow ? "Обнаружено менее 16 ГБ ОЗУ (" + ramGb + " ГБ). На некоторых модулях активация XMP может вызвать нестабильность. Рекомендуется сначала установить 16+ ГБ в двухканальном режиме." : (channels === 'single' ? "ОЗУ установлена в один канал (Single Channel). Профиль XMP не компенсирует отсутствие второго канала памяти. Рекомендуется установить 2 модуля." : null)
+      badge: xmpBadge,
+      badgeClass: xmpBadgeClass,
+      crumbs: isXmpSupported ? ramCrumbs : ["Tweaker", "JEDEC Standard (Штатный режим)"],
+      desc: isXmpSupported ? ramDesc : "Память функционирует на стандартной заводской частоте. Пропустите этот пункт.",
+      supported: isXmpSupported,
+      warning: xmpWarning
     },
     {
       title: "2. Resizable BAR (Прямой доступ GPU)",
@@ -404,7 +582,7 @@
       crumbs: rebarCrumbs,
       desc: "Позволяет процессору адресовать всю видеопамять видеокарты сразу, устраняя просадки кадров в соревновательных играх.",
       supported: !isRebarBlocked,
-      warning: disk === 'mbr' ? "На вашей материнской плате невозможно включить ReBAR, так как диск размечен в MBR. ReBAR аппаратно требует чистого UEFI и разметки GPT." : (isLaptop ? "На ноутбуках функция ReBAR управляется видеодрайвером и заблокирована в BIOS производителем." : null)
+      warning: disk === 'mbr' ? "На вашей плате невозможно включить ReBAR, так как диск размечен в MBR. ReBAR требует чистый UEFI и разметку GPT." : (isLaptop ? "На ноутбуках функция ReBAR управляется видеодрайвером и заблокирована в BIOS производителем." : null)
     },
     {
       title: "3. Задержки отклика (C-States Control)",
@@ -413,7 +591,7 @@
       crumbs: cstatesCrumbs,
       desc: "Запрещает ядрам процессора уходить в глубокий сон, устраняя задержку первого клика мыши.",
       supported: !isLaptop,
-      warning: isLaptop ? "На ноутбуках отключение C-States заблокировано для предотвращения критического перегрева аккумулятора и процессора." : "Внимание: отключение C-States повышает температуру процессора в простое на 5–10°C. Не используйте на слабых кулерах."
+      warning: isLaptop ? "На ноутбуках отключение C-States заблокировано для предотвращения перегрева аккумулятора и процессора." : "Внимание: отключение C-States повышает температуру процессора в простое на 5–10°C."
     },
     {
       title: "4. Фиксация опорной шины (Spread Spectrum)",
@@ -430,8 +608,9 @@
     const container = document.getElementById(containerId);
     list.forEach((step, idx) => {
       const card = document.createElement('div');
-      card.className = 'step-card' + (step.supported ? '' : ' disabled');
+      card.className = 'step-card animate-in' + (step.supported ? '' : ' disabled');
       card.id = prefix + '-step-' + idx;
+      card.style.animationDelay = (0.2 + idx * 0.06) + 's';
 
       const pathHtml = step.crumbs.map((c, i) => {
         const isLast = i === step.crumbs.length - 1;
